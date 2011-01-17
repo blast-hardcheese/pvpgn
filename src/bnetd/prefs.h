@@ -27,6 +27,12 @@
 #ifndef INCLUDED_PREFS_PROTOS
 #define INCLUDED_PREFS_PROTOS
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 extern int prefs_load(char const * filename);
 extern void prefs_unload(void);
 extern char const * prefs_get_storage_path(void) ;
@@ -161,6 +167,7 @@ extern int prefs_get_max_friends(void) ;
 extern unsigned int prefs_get_clan_newer_time(void) ;
 extern unsigned int prefs_get_clan_max_members(void) ;
 extern unsigned int prefs_get_clan_channel_default_private(void) ;
+extern unsigned int prefs_get_clan_min_invites(void);
 
 extern unsigned int prefs_get_passfail_count(void) ;
 extern unsigned int prefs_get_passfail_bantime(void) ;
@@ -176,10 +183,19 @@ extern char const * prefs_get_irc_network_name(void);
 /**
 *  Westwood Online Extensions
 */
-extern char const * prefs_get_wol_addrs(void);
+extern char const * prefs_get_apireg_addrs(void);
+extern char const * prefs_get_wgameres_addrs(void);
+extern char const * prefs_get_wolv1_addrs(void);
+extern char const * prefs_get_wolv2_addrs(void);
 extern char const * prefs_get_wol_timezone(void);
 extern char const * prefs_get_wol_longitude(void);
 extern char const * prefs_get_wol_latitude(void);
+extern char const * prefs_get_wol_autoupdate_serverhost(void);
+extern char const * prefs_get_wol_autoupdate_username(void);
+extern char const * prefs_get_wol_autoupdate_password(void);
+}
+
+}
 
 #endif
 #endif

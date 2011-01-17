@@ -1,6 +1,6 @@
 /*
   * Abstraction API/layer for the various ways PvPGN can inspect sockets state
-  * 2003 (C) 
+  * 2003 (C)
   *
   * Code is based on the ideas found in thttpd project.
   *
@@ -23,6 +23,44 @@
 #ifndef __INCLUDED_FDWATCH_POLL__
 #define __INCLUDED_FDWATCH_POLL__
 
-extern t_fdw_backend fdw_poll;
+#ifdef HAVE_POLL
+
+#ifdef HAVE_POLL_H
+# include <poll.h>
+#else
+# ifdef HAVE_SYS_POLL_H
+#  include <sys/poll.h>
+# endif
+#endif
+
+#include "scoped_array.h"
+#include "fdwbackend.h"
+
+namespace pvpgn
+{
+
+class FDWPollBackend: public FDWBackend
+{
+public:
+	explicit FDWPollBackend(int nfds_);
+	~FDWPollBackend() throw();
+
+	int add(int idx, unsigned rw);
+	int del(int idx);
+	int watch(long timeout_msecs);
+	void handle();
+
+private:
+	int sr;
+	scoped_array<struct pollfd> fds; /* working set */
+	scoped_array<int> rridx;
+	scoped_array<int> ridx;
+	unsigned nofds;
+
+};
+
+}
+
+#endif /* HAVE_POLL */
 
 #endif /* __INCLUDED_FDWATCH_POLL__ */

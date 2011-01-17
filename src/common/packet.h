@@ -20,32 +20,37 @@
 #define INCLUDED_PACKET_TYPES
 
 #ifdef JUST_NEED_TYPES
-# include "common/field_sizes.h"
-# include "common/init_protocol.h"
-# include "common/bnet_protocol.h"
-# include "common/anongame_protocol.h"
-# include "common/file_protocol.h"
-# include "common/bot_protocol.h"
-# include "common/udp_protocol.h"
-# include "common/d2game_protocol.h"
-# include "d2cs/d2cs_protocol.h"
-# include "d2cs/d2cs_d2gs_protocol.h"
-# include "d2cs/d2cs_bnetd_protocol.h"
+# include "field_sizes.h"
+# include "init_protocol.h"
+# include "bnet_protocol.h"
+# include "anongame_protocol.h"
+# include "file_protocol.h"
+# include "bot_protocol.h"
+# include "udp_protocol.h"
+# include "d2game_protocol.h"
+# include "d2cs_protocol.h"
+# include "d2cs_d2gs_protocol.h"
+# include "d2cs_bnetd_protocol.h"
+# include "wol_gameres_protocol.h"
 #else
 # define JUST_NEED_TYPES
-# include "common/field_sizes.h"
-# include "common/init_protocol.h"
-# include "common/bnet_protocol.h"
-# include "common/anongame_protocol.h"
-# include "common/file_protocol.h"
-# include "common/bot_protocol.h"
-# include "common/udp_protocol.h"
-# include "common/d2game_protocol.h"
-# include "d2cs/d2cs_protocol.h"
-# include "d2cs/d2cs_d2gs_protocol.h"
-# include "d2cs/d2cs_bnetd_protocol.h"
+# include "field_sizes.h"
+# include "init_protocol.h"
+# include "bnet_protocol.h"
+# include "anongame_protocol.h"
+# include "file_protocol.h"
+# include "bot_protocol.h"
+# include "udp_protocol.h"
+# include "d2game_protocol.h"
+# include "d2cs_protocol.h"
+# include "d2cs_d2gs_protocol.h"
+# include "d2cs_bnetd_protocol.h"
+# include "wol_gameres_protocol.h"
 # undef JUST_NEED_TYPES
 #endif
+
+namespace pvpgn
+{
 
 typedef enum
 {
@@ -59,7 +64,8 @@ typedef enum
     packet_class_d2gs,
     packet_class_d2cs,
     packet_class_d2cs_bnetd,
-    packet_class_w3route
+    packet_class_w3route,
+    packet_class_wolgameres
 } t_packet_class;
 
 
@@ -76,24 +82,26 @@ typedef enum
  */
 typedef struct
 {
-    unsigned int   ref;   /* reference count */
-    t_packet_class class;
-    unsigned int   flags; /* user-defined flags (used to mark UDP in bnproxy) */
-    unsigned int   len;   /* raw packets have no header, so we use this */
-    
+    unsigned int   ref;      /* reference count */
+    t_packet_class pclass;
+    unsigned int   flags;    /* user-defined flags (used to mark UDP in bnproxy) */
+    unsigned int   len;      /* raw packets have no header, so we use this */
+
     /* next part looks just like it would on the network (no padding, byte for byte) */
     union
     {
         char data[MAX_PACKET_SIZE];
-        
-        t_bnet_generic   bnet;
-        t_file_generic   file;
-        t_udp_generic    udp;
-        t_d2game_generic d2game;
-	t_w3route_generic w3route;
-        
-	t_client_initconn client_initconn;
-	
+
+        t_bnet_generic              bnet;
+        t_file_generic              file;
+        t_udp_generic               udp;
+        t_d2game_generic            d2game;
+        t_w3route_generic           w3route;
+        t_wolgameres_generic        wolgameres;
+
+
+        t_client_initconn           client_initconn;
+
         t_server_authreply1         server_authreply1;
         t_server_authreq1           server_authreq1;
         t_client_authreq1           client_authreq1;
@@ -205,6 +213,10 @@ typedef struct
 	t_server_logonproofreply   server_logonproofreply;
 	t_client_createaccount_w3  client_createaccount_w3;
 	t_server_createaccount_w3  server_createaccount_w3;
+	t_client_passchangereq     client_passchangereq;
+	t_server_passchangereply   server_passchangereply;
+	t_client_passchangeproofreq     client_passchangeproofreq;
+	t_server_passchangeproofreply   server_passchangeproofreply;
 	t_client_findanongame      client_findanongame;
 	t_client_findanongame_at   client_findanongame_at;
 	t_client_findanongame_at_inv   client_findanongame_at_inv;
@@ -291,7 +303,7 @@ typedef struct
 	t_client_findanongame_profile		client_findanongame_profile;
 
 	t_server_findanongame_profile2		server_findanongame_profile2;
-		
+
 	t_client_w3route_req			client_w3route_req;
 	t_server_w3route_ack			server_w3route_ack;
 	t_server_w3route_playerinfo		server_w3route_playerinfo;
@@ -308,34 +320,34 @@ typedef struct
 
 	t_client_findanongame_inforeq		client_findanongame_inforeq;
 	t_server_findanongame_inforeply		server_findanongame_inforeply;
-	
-	t_client_w3xp_clan_invitereq		client_w3xp_clan_invitereq;
-    	t_server_w3xp_clan_invitereply		server_w3xp_clan_invitereply;
-	t_server_w3xp_clan_invitereq		server_w3xp_clan_invitereq;
-	t_client_w3xp_clan_invitereply		client_w3xp_clan_invitereply;
-	t_client_w3xp_clan_disbandreq		client_w3xp_clan_disbandreq;
-	t_server_w3xp_clan_disbandreply		server_w3xp_clan_disbandreply;
-	t_client_w3xp_clan_motdchg		client_w3xp_clan_motdchg;
-	t_client_w3xp_clan_motdreq		client_w3xp_clan_motdreq;
-	t_server_w3xp_clan_motdreply		server_w3xp_clan_motdreply;
-	t_client_w3xp_clanmemberlist_req	client_w3xp_clanmemberlist_req;
-	t_server_w3xp_clanmemberlist_reply	server_w3xp_clanmemberlist_reply;
-	t_client_w3xp_clan_createreq		client_w3xp_clan_createreq;
-	t_server_w3xp_clan_createreply		server_w3xp_clan_createreply;
-	t_client_w3xp_clan_createinvitereq	client_w3xp_clan_createinvitereq;
-	t_server_w3xp_clan_createinvitereply	server_w3xp_clan_createinvitereply;
-	t_server_w3xp_clan_createinvitereq	server_w3xp_clan_createinvitereq;
-	t_client_w3xp_clan_createinvitereply	client_w3xp_clan_createinvitereply;
-	t_server_w3xp_clan_clanack		server_w3xp_clan_clanack;
-	t_server_w3xp_clanmemberupdate          server_w3xp_clanmemberupdate;
-	t_client_w3xp_clanmember_rankupdate_req   client_w3xp_clanmember_rankupdate_req;
-	t_server_w3xp_clanmember_rankupdate_reply server_w3xp_clanmember_rankupdate_reply;
-	t_client_w3xp_clanmember_remove_req     client_w3xp_clanmember_remove_req;
-	t_server_w3xp_clanmember_remove_reply   server_w3xp_clanmember_remove_reply;
-	t_client_w3xp_clan_membernewchiefreq    client_w3xp_clan_membernewchiefreq;
-	t_server_w3xp_clan_membernewchiefreply  server_w3xp_clan_membernewchiefreply;
-	t_server_w3xp_clanquitnotify            server_w3xp_clanquitnotify;
-	t_server_w3xp_clanmember_removed_notify server_w3xp_clanmember_removed_notify;
+
+	t_client_clan_invitereq client_clan_invitereq;
+	t_server_clan_invitereply server_clan_invitereply;
+	t_server_clan_invitereq server_clan_invitereq;
+	t_client_clan_invitereply client_clan_invitereply;
+	t_client_clan_disbandreq client_clan_disbandreq;
+	t_server_clan_disbandreply server_clan_disbandreply;
+	t_client_clan_motdchg client_clan_motdchg;
+	t_client_clan_motdreq client_clan_motdreq;
+	t_server_clan_motdreply server_clan_motdreply;
+	t_client_clanmemberlist_req client_clanmemberlist_req;
+	t_server_clanmemberlist_reply server_clanmemberlist_reply;
+	t_client_clan_createreq client_clan_createreq;
+	t_server_clan_createreply server_clan_createreply;
+	t_client_clan_createinvitereq client_clan_createinvitereq;
+	t_server_clan_createinvitereply server_clan_createinvitereply;
+	t_server_clan_createinvitereq server_clan_createinvitereq;
+	t_client_clan_createinvitereply client_clan_createinvitereply;
+	t_server_clan_clanack server_clan_clanack;
+	t_server_clanmemberupdate server_clanmemberupdate;
+	t_client_clanmember_rankupdate_req client_clanmember_rankupdate_req;
+	t_server_clanmember_rankupdate_reply server_clanmember_rankupdate_reply;
+	t_client_clanmember_remove_req client_clanmember_remove_req;
+	t_server_clanmember_remove_reply server_clanmember_remove_reply;
+	t_client_clan_membernewchiefreq client_clan_membernewchiefreq;
+	t_server_clan_membernewchiefreply server_clan_membernewchiefreply;
+	t_server_clanquitnotify server_clanquitnotify;
+	t_server_clanmember_removed_notify server_clanmember_removed_notify;
 
 	t_server_findanongame_iconreply		server_findanongame_iconreply;
 	t_client_changeclient			client_changeclient;
@@ -356,6 +368,8 @@ typedef struct
 	} u;
 } t_packet;
 
+}
+
 #endif
 
 /*****/
@@ -363,15 +377,18 @@ typedef struct
 #ifndef INCLUDED_PACKET_PROTOS
 #define INCLUDED_PACKET_PROTOS
 
-#include "common/lstr.h"
+#include "lstr.h"
 
-extern t_packet * packet_create(t_packet_class class) ;
+namespace pvpgn
+{
+
+extern t_packet * packet_create(t_packet_class pclass) ;
 extern void packet_destroy(t_packet const * packet);
 extern t_packet * packet_add_ref(t_packet * packet);
 extern void packet_del_ref(t_packet * packet);
 extern t_packet_class packet_get_class(t_packet const * packet);
 extern char const * packet_get_class_str(t_packet const * packet);
-extern int packet_set_class(t_packet * packet, t_packet_class class);
+extern int packet_set_class(t_packet * packet, t_packet_class pclass);
 extern unsigned int packet_get_type(t_packet const * packet);
 extern char const * packet_get_type_str(t_packet const * packet, t_packet_dir dir);
 extern int packet_set_type(t_packet * packet, unsigned int type);
@@ -390,6 +407,8 @@ extern void * packet_get_raw_data_build(t_packet * packet, unsigned int offset);
 extern char const * packet_get_str_const(t_packet const * packet, unsigned int offset, unsigned int maxlen);
 extern void const * packet_get_data_const(t_packet const * packet, unsigned int offset, unsigned int len);
 extern t_packet * packet_duplicate(t_packet const * src);
+
+}
 
 #endif
 #endif

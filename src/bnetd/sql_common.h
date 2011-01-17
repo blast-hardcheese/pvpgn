@@ -19,6 +19,12 @@
 #ifndef INCLUDED_SQL_COMMON_TYPES
 #define INCLUDED_SQL_COMMON_TYPES
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 typedef unsigned int t_sql_info;
 
 /* used as a pointer to it */
@@ -29,7 +35,6 @@ typedef char * t_sql_row;
 typedef char * t_sql_field;
 
 typedef struct {
-    char quote;	/* quote character for column names, depending on backend */
     int (*init)(const char *host, const char *port, const char *socket, const char *name, const char *user, const char *pass);
     int (*close)(void);
     t_sql_res * (*query_res)(const char *);
@@ -44,6 +49,10 @@ typedef struct {
     void (*escape_string)(char *, const char *, int);
 } t_sql_engine;
 
+}
+
+}
+
 #endif /* INCLUDED_SQL_COMMON_TYPES */
 
 #ifndef JUST_NEED_TYPES
@@ -51,6 +60,12 @@ typedef struct {
 #define INCLUDED_SQL_COMMON_PROTOS
 
 #include "storage.h"
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 extern t_storage storage_sql;
 
@@ -92,6 +107,10 @@ extern int sql_write_team(void *data);
 extern int sql_remove_team(unsigned int teamid);
 
 #endif /* SQL_INTERNAL */
+
+}
+
+}
 
 #endif /* INCLUDED_SQL_COMMON_PROTOS */
 #endif /* JUST_NEED_TYPES */

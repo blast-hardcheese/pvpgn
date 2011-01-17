@@ -19,6 +19,14 @@
 #ifndef INCLUDED_SERVER_TYPES
 #define INCLUDED_SERVER_TYPES
 
+#include <ctime>
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 #ifdef SERVER_INTERNAL_ACCESS
 
 typedef enum
@@ -26,7 +34,10 @@ typedef enum
     laddr_type_bnet,	/* classic battle.net service (usually on port 6112) */
     laddr_type_w3route, /* warcraft 3 playgame routing (def. port 6200) */
     laddr_type_irc,   	/* Internet Relay Chat service (port is varying; mostly on port 6667 or 7000) */
-    laddr_type_wol,	    /* Westwood Online (IRC) Chat Services (port is 4005) */
+    laddr_type_wolv1,   /* Westwood Online v1 (IRC) Services (port is 4000) */
+    laddr_type_wolv2,   /* Westwood Online v2 (IRC) Services (port is 4005) */
+    laddr_type_apireg,  /* Westwood API Register Services (port is 5700) */
+    laddr_type_wgameres,/* Westwood gameres Services (port is 4807) */
     laddr_type_telnet 	/* telnet service (usually on port 23) */
 } t_laddr_type;
 
@@ -41,10 +52,11 @@ typedef struct
 
 #endif
 
-#ifdef HAVE_TIME_H
-# include <time.h>
-#endif
-extern time_t now;
+extern std::time_t now;
+
+}
+
+}
 
 #endif
 
@@ -53,6 +65,12 @@ extern time_t now;
 #ifndef JUST_NEED_TYPES
 #ifndef INCLUDED_SERVER_PROTOS
 #define INCLUDED_SERVER_PROTOS
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 extern unsigned int server_get_uptime(void);
 extern unsigned int server_get_starttime(void);
@@ -66,6 +84,9 @@ extern void server_quit_wraper(void);
 extern void server_restart_wraper(void);
 extern void server_save_wraper(void);
 
+}
+
+}
 
 #endif
 #endif

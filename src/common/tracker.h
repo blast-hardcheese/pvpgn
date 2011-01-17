@@ -28,6 +28,9 @@
 #endif
 #endif
 
+namespace pvpgn
+{
+
 /*
  *
  * Here's how this works:
@@ -71,20 +74,6 @@ typedef struct
                              * listed (Currently ignored) */
 #endif
 
-#endif
+}
 
-
-/*****/
-#ifndef JUST_NEED_TYPES
-#ifndef INCLUDED_TRACKER_PROTOS
-#define INCLUDED_TRACKER_PROTOS
-
-#define JUST_NEED_TYPES
-#include "addr.h"
-#undef JUST_NEED_TYPES
-
-extern int tracker_set_servers(char const * servers);
-extern int tracker_send_report(t_addrlist const * addrs);
-
-#endif
 #endif

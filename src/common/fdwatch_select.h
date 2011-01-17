@@ -1,6 +1,6 @@
 /*
   * Abstraction API/layer for the various ways PvPGN can inspect sockets state
-  * 2003 (C) 
+  * 2003 (C)
   *
   * Code is based on the ideas found in thttpd project.
   *
@@ -23,6 +23,37 @@
 #ifndef __INCLUDED_FDWATCH_SELECT__
 #define __INCLUDED_FDWATCH_SELECT__
 
-extern t_fdw_backend fdw_select;
+#ifdef HAVE_SELECT
+
+#include "compat/psock.h"
+#include "common/scoped_ptr.h"
+#include "fdwatch.h"
+#include "fdwbackend.h"
+
+namespace pvpgn
+{
+
+class FDWSelectBackend: public FDWBackend
+{
+public:
+	explicit FDWSelectBackend(int nfds_);
+	~FDWSelectBackend() throw();
+
+	int add(int idx, unsigned rw);
+	int del(int idx);
+	int watch(long timeout_msecs);
+	void handle();
+
+	int cb(t_fdwatch_fd* cfd);
+
+private:
+	int sr, smaxfd;
+	scoped_ptr<t_psock_fd_set> rfds, wfds, /* working sets (updated often) */
+	                              trfds, twfds; /* templates (updated rare) */
+};
+
+}
+
+#endif /* HAVE_SELECT */
 
 #endif /* __INCLUDED_FDWATCH_SELECT__ */

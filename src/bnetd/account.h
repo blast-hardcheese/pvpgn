@@ -23,14 +23,12 @@
 #define JUST_NEED_TYPES
 #include "common/list.h"
 #include "common/elist.h"
-#include "clan.h"
 #include "team.h"
 #include "attrgroup.h"
 #undef JUST_NEED_TYPES
 #else
 #include "common/list.h"
 #include "common/elist.h"
-#include "clan.h"
 #include "team.h"
 #include "attrgroup.h"
 #endif
@@ -38,7 +36,15 @@
 #define ACCOUNT_FLAG_NONE	0
 #define ACCOUNT_FLAG_FLOADED	1	/* friends list loaded */
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 struct connection;
+struct _clanmember;
+struct clan;
 
 typedef struct account_struct
 #ifdef ACCOUNT_INTERNAL_ACCESS
@@ -49,12 +55,16 @@ typedef struct account_struct
     unsigned int  uid;      /* cached from attrs */
     unsigned int  flags;
     struct connection * conn;
-    t_clanmember   * clanmember;
+    struct _clanmember   * clanmember;
     t_list * friends;
     t_list * teams;
 }
 #endif
 t_account;
+
+}
+
+}
 
 #endif
 
@@ -68,11 +78,18 @@ t_account;
 #include "connection.h"
 #undef JUST_NEED_TYPES
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 extern unsigned int maxuserid;
 
 extern int accountlist_reload(void);
 extern int account_check_name(char const * name);
-extern unsigned int account_get_uid(t_account const * account);
+#define account_get_uid(A) account_get_uid_real(A,__FILE__,__LINE__)
+extern unsigned int account_get_uid_real(t_account const * account, char const * fn, unsigned int ln);
 extern int account_match(t_account * account, char const * username);
 extern int account_save(t_account *account, unsigned flags);
 extern char const * account_get_strattr_real(t_account * account, char const * key, char const * fn, unsigned int ln);
@@ -100,11 +117,11 @@ extern char const * account_get_name_real(t_account * account, char const * fn, 
 extern int account_check_mutual( t_account * account,  int myuserid);
 extern t_list * account_get_friends(t_account * account);
 
-extern int account_set_clanmember(t_account * account, t_clanmember * clanmember);
-extern t_clanmember * account_get_clanmember(t_account * account);
-extern t_clanmember * account_get_clanmember_forced(t_account * account);
-extern t_clan * account_get_clan(t_account * account);
-extern t_clan * account_get_creating_clan(t_account * account);
+extern int account_set_clanmember(t_account * account, _clanmember * clanmember);
+extern _clanmember * account_get_clanmember(t_account * account);
+extern _clanmember * account_get_clanmember_forced(t_account * account);
+extern clan * account_get_clan(t_account * account);
+extern clan * account_get_creating_clan(t_account * account);
 
 extern int account_set_conn(t_account * account, t_connection * conn);
 extern t_connection * account_get_conn(t_account * account);
@@ -113,6 +130,10 @@ extern void account_add_team(t_account * account, t_team * team);
 extern t_team * account_find_team_by_accounts(t_account * account, t_account **accounts, t_clienttag clienttag);
 extern t_team * account_find_team_by_teamid(t_account * account, unsigned int teamid);
 extern t_list * account_get_teams(t_account * account);
+
+}
+
+}
 
 #endif
 #endif

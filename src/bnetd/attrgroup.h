@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Dizzy 
+ * Copyright (C) 2004 Dizzy
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,9 +19,7 @@
 #ifndef __ATTRGROUP_H_INCLUDED__
 #define __ATTRGROUP_H_INCLUDED__
 
-#ifdef HAVE_TIME_H
-# include <time.h>
-#endif
+#include <ctime>
 #include "common/elist.h"
 
 #ifndef JUST_NEED_TYPES
@@ -37,19 +35,25 @@
 #define ATTRGROUP_FLAG_ACCESSED	2
 #define ATTRGROUP_FLAG_DIRTY	4
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 /* attrgroup represents a group of attributes which are read/saved/flush together
  * ex: each account stores it's data into a attrgroup */
-typedef struct attrgroup_struct 
+typedef struct attrgroup_struct
 #ifdef ATTRGROUP_INTERNAL_ACCESS
 {
     t_hlist		list;
     t_storage_info	*storage;
     int			flags;
-    time_t		lastaccess;
-    time_t		dirtytime;
+    std::time_t		lastaccess;
+    std::time_t		dirtytime;
     t_elist		loadedlist;
     t_elist		dirtylist;
-} 
+}
 #endif
 t_attrgroup;
 
@@ -66,5 +70,9 @@ extern const char *attrgroup_get_attr(t_attrgroup *attrgroup, const char *key);
 extern int attrgroup_set_attr(t_attrgroup *attrgroup, const char *key, const char *val);
 extern int attrgroup_save(t_attrgroup *attrgroup, int flags);
 extern int attrgroup_flush(t_attrgroup *attrgroup, int flags);
+
+}
+
+}
 
 #endif /* __ATTRGROUP_H_INCLUDED__ */

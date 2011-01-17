@@ -15,20 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-#ifndef INCLUDED_PROGINFO_TYPES
-#define INCLUDED_PROGINFO_TYPES
-
-#endif
-
-
-/*****/
 #ifndef JUST_NEED_TYPES
 #ifndef INCLUDED_PROGINFO_PROTOS
 #define INCLUDED_PROGINFO_PROTOS
 
+namespace pvpgn
+{
+
 extern int verparts_to_vernum(unsigned short v1, unsigned short v2, unsigned short v3, unsigned short v4, unsigned long * vernum);
 extern int verstr_to_vernum(char const * verstr, unsigned long * vernum);
 extern char const * vernum_to_verstr(unsigned long vernum);
+
+}
 
 #endif
 #endif

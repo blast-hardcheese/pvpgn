@@ -19,20 +19,27 @@
 #ifndef INCLUDED_TEAM_TYPES
 #define INCLUDED_TEAM_TYPES
 
-# include "common/list.h"
+#include <ctime>
+
 #ifndef JUST_NEED_TYPES
 # define JUST_NEED_TYPES
+# include "common/list.h"
+# include "common/tag.h"
 # include "account.h"
 # undef JUST_NEED_TYPES
 #else
+# include "common/list.h"
+# include "common/tag.h"
 # include "account.h"
-#endif
-#include "common/tag.h"
-#ifdef HAVE_TIME_H
-# include <time.h>
 #endif
 
 #define MAX_TEAMSIZE 4
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 typedef struct team
 #ifdef TEAM_INTERNAL_ACCESS
@@ -47,16 +54,26 @@ typedef struct team
 	unsigned int	teammembers[MAX_TEAMSIZE];
 	t_account *     members[MAX_TEAMSIZE];
 	t_clienttag	clienttag;
-	time_t		lastgame;
+	std::time_t	lastgame;
 }
 #endif
 t_team;
+
+}
+
+}
 
 #endif
 
 #ifndef JUST_NEED_TYPES
 #ifndef INCLUDED_TEAM_PROTOS
 #define INCLUDED_TEAM_PROTOS
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 extern int teamlist_load(void);
 extern int teamlist_unload(void);
@@ -83,13 +100,18 @@ extern int team_get_wins(t_team * team);
 extern int team_get_losses(t_team * team);
 extern int team_get_xp(t_team * team);
 extern int team_get_level(t_team * team);
+extern int team_set_rank(t_team * team, unsigned int rank);
 extern int team_get_rank(t_team * team);
-extern time_t team_get_lastgame(t_team * team);
+extern std::time_t team_get_lastgame(t_team * team);
 
 extern int team_inc_wins(t_team * team);
 extern int team_inc_losses(t_team * team);
 
 extern int team_set_saveladderstats(t_team * team, unsigned int gametype, int result, unsigned int opponlevel,t_clienttag clienttag);
+
+}
+
+}
 
 #endif
 #endif

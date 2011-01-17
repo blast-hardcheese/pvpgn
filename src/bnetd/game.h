@@ -22,40 +22,28 @@
 #ifdef GAME_INTERNAL_ACCESS
 
 #ifdef JUST_NEED_TYPES
-# ifdef TIME_WITH_SYS_TIME
-#  include <sys/time.h>
-#  include <time.h>
-# else
-#  ifdef HAVE_SYS_TIME_H
-#   include <sys/time.h>
-#  else
-#   include <time.h>
-#  endif
-# endif
 # include "account.h"
 # include "connection.h"
+# include "channel.h"
 # include "common/tag.h"
 # include "common/elist.h"
 #else
 # define JUST_NEED_TYPES
-# ifdef TIME_WITH_SYS_TIME
-#  include <sys/time.h>
-#  include <time.h>
-# else
-#  ifdef HAVE_SYS_TIME_H
-#   include <sys/time.h>
-#  else
-#   include <time.h>
-#  endif
-# endif
 # include "account.h"
 # include "connection.h"
+# include "channel.h"
 # include "common/tag.h"
 # include "common/elist.h"
 # undef JUST_NEED_TYPES
 #endif
 
 #endif
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 typedef enum
 {
@@ -87,8 +75,8 @@ typedef enum
     game_status_started,
     game_status_full,
     game_status_open,
-    game_status_done,
-    game_status_loaded
+    game_status_loaded,
+    game_status_done
 } t_game_status;
 
 typedef enum
@@ -129,14 +117,14 @@ typedef enum
     game_option_teamffa_2,
     game_option_teamctf_4,
     game_option_teamctf_3,
-    game_option_teamctf_2, 
-    game_option_topvbot_7, 
-    game_option_topvbot_6, 
-    game_option_topvbot_5, 
-    game_option_topvbot_4, 
-    game_option_topvbot_3, 
-    game_option_topvbot_2, 
-    game_option_topvbot_1 
+    game_option_teamctf_2,
+    game_option_topvbot_7,
+    game_option_topvbot_6,
+    game_option_topvbot_5,
+    game_option_topvbot_4,
+    game_option_topvbot_3,
+    game_option_topvbot_2,
+    game_option_topvbot_1
 } t_game_option;
 
 typedef enum
@@ -217,7 +205,7 @@ typedef struct game
     unsigned int      mapsize_x;
     unsigned int      mapsize_y;
     unsigned int      maxplayers;
-    
+
     t_connection *    owner;
     t_connection * *  connections;
     t_account * *     players;
@@ -226,11 +214,13 @@ typedef struct game
     char const * *    report_heads;
     char const * *    report_bodies;
     
-    time_t            create_time;
-    time_t            start_time;
-    time_t            lastaccess_time;
+    t_channel *       channel; /* For Games with server-side chat support */
+
+    std::time_t            create_time;
+    std::time_t            start_time;
+    std::time_t            lastaccess_time;
     int               bad; /* if 1, then the results will be ignored */
-    t_game_difficulty difficulty;
+    unsigned          difficulty;
     char const *      description;
     t_game_flag       flag;
     t_elist	      glist_link;
@@ -239,6 +229,10 @@ typedef struct game
 t_game;
 
 typedef int (*t_glist_func)(t_game *, void *);
+
+}
+
+}
 
 #endif
 
@@ -255,21 +249,18 @@ typedef int (*t_glist_func)(t_game *, void *);
 #define STARTVER_REALM1 104
 
 #define JUST_NEED_TYPES
-#ifdef TIME_WITH_SYS_TIME
-# include <sys/time.h>
-# include <time.h>
-#else
-# ifdef HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# else
-#  include <time.h>
-# endif
-#endif
 #include "account.h"
 #include "connection.h"
+#include "channel.h"
 #include "common/list.h"
 #include "common/tag.h"
 #undef JUST_NEED_TYPES
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 extern char const * game_type_get_str(t_game_type type) ;
 extern char const * game_status_get_str(t_game_status status) ;
@@ -278,7 +269,7 @@ extern char const * game_option_get_str(t_game_option option) ;
 extern char const * game_maptype_get_str(t_game_maptype maptype) ;
 extern char const * game_tileset_get_str(t_game_tileset tileset) ;
 extern char const * game_speed_get_str(t_game_speed speed) ;
-extern char const * game_difficulty_get_str(t_game_difficulty difficulty) ;
+extern char const * game_difficulty_get_str(unsigned difficulty) ;
 extern t_game * game_create(char const * name, char const * pass, char const * info, t_game_type type, int startver, t_clienttag clienttag,unsigned long gameversion) ;
 extern unsigned int game_get_id(t_game const * game);
 extern char const * game_get_name(t_game const * game);
@@ -322,26 +313,33 @@ extern t_game_result * game_get_reported_results(t_game * game, t_account * acco
 extern char const * game_get_mapname(t_game const * game);
 extern int game_set_mapname(t_game * game, char const * mapname);
 extern t_connection * game_get_owner(t_game const * game);
-extern time_t game_get_create_time(t_game const * game);
-extern time_t game_get_start_time(t_game const * game);
+extern std::time_t game_get_create_time(t_game const * game);
+extern std::time_t game_get_start_time(t_game const * game);
 extern int game_set_option(t_game * game, t_game_option option);
 extern t_game_option game_get_option(t_game const * game);
 extern int gamelist_create(void);
 extern int gamelist_destroy(void);
 extern int gamelist_get_length(void);
 extern t_game * gamelist_find_game(char const * name, t_clienttag ctag, t_game_type type);
+extern t_game * gamelist_find_game_available(char const * name, t_clienttag ctag, t_game_type type);
 extern t_game * gamelist_find_game_byid(unsigned int id);
 extern void gamelist_traverse(t_glist_func cb, void *data);
 extern int gamelist_total_games(void);
-extern int game_set_realm(t_game * game, unsigned int realm); 
-extern unsigned int game_get_realm(t_game const * game); 
-extern char const * game_get_realmname(t_game const * game); 
-extern int game_set_realmname(t_game * game, char const * realmname); 
+extern int game_set_realm(t_game * game, unsigned int realm);
+extern unsigned int game_get_realm(t_game const * game);
+extern char const * game_get_realmname(t_game const * game);
+extern int game_set_realmname(t_game * game, char const * realmname);
 extern void gamelist_check_voidgame(void);
 extern void game_set_flag(t_game * game, t_game_flag flag);
 extern t_game_flag game_get_flag(t_game const * game);
 extern int game_get_count_by_clienttag(t_clienttag ct);
 extern int game_is_ladder(t_game *game);
+extern int game_discisloss(t_game *game);
+extern int game_set_channel(t_game * game, t_channel * channel);
+extern t_channel * game_get_channel(t_game * game);
+}
+
+}
 
 #endif
 #endif

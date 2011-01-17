@@ -18,7 +18,13 @@
  */
 
 #include "common/elist.h"
-#include "d2cs_d2gs_character.h"
+#include "common/d2cs_d2gs_character.h"
+
+namespace pvpgn
+{
+
+namespace d2cs
+{
 
 typedef struct  	d2charlist{
     t_d2charinfo_file	*charinfo;
@@ -27,3 +33,7 @@ typedef struct  	d2charlist{
 } t_d2charlist;
 
 extern int d2charlist_add_char(t_elist *, t_d2charinfo_file *i, unsigned int);
+
+}
+
+}

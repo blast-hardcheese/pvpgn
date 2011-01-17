@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005           Dizzy       
+ * Copyright (C) 2005           Dizzy
  * Copyright (C) 2005           Olaf Freyer (aaron@cs.tu-berlin.de)
  *
  * This program is free software; you can redistribute it and/or
@@ -19,6 +19,12 @@
 
 #ifndef __D2CS_CMDLINE_H_PROTOS__
 #define __D2CS_CMDLINE_H_PROTOS__
+namespace pvpgn
+{
+
+namespace d2cs
+{
+
 
 extern int cmdline_load(int argc, char * * argv);
 extern void cmdline_unload(void);
@@ -29,5 +35,13 @@ extern int cmdline_get_foreground(void);
 #endif
 extern const char* cmdline_get_preffile(void);
 extern const char* cmdline_get_logfile(void);
+#ifdef WIN32_GUI
+extern unsigned cmdline_get_console(void);
+extern unsigned cmdline_get_gui(void);
+#endif
+
+}
+
+}
 
 #endif /* __D2CS_CMDLINE_H_PROTOS__ */

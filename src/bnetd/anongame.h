@@ -16,7 +16,6 @@
 #ifndef INCLUDED_ANONGAME_TYPES
 #define INCLUDED_ANONGAME_TYPES
 
-#include "common/setup_before.h"
 #ifdef JUST_NEED_TYPES
 # include "account.h"
 # include "connection.h"
@@ -29,7 +28,12 @@
 # undef JUST_NEED_TYPES
 #endif
 # include "anongame_gameresult.h"
-#include "common/setup_after.h"
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 typedef struct
 {
@@ -50,14 +54,14 @@ typedef struct
     struct connection *		tc[ANONGAME_MAX_GAMECOUNT/2];
     t_uint32			race;
     t_uint32			handle;
-    unsigned int		addr;	
+    unsigned int		addr;
     char			loaded;
     char			joined;
     t_uint8			playernum;
     t_uint32			map_prefs;
     t_uint8			type;
     t_uint8			gametype;
-    int				queue;	
+    int				queue;
 } t_anongame;
 
 typedef struct
@@ -66,6 +70,10 @@ typedef struct
 	t_uint32		map_prefs;
 	char const *		versiontag;
 } t_matchdata;
+
+}
+
+}
 
 #endif
 
@@ -78,6 +86,12 @@ typedef struct
 #include "common/packet.h"
 #include "connection.h"
 #undef JUST_NEED_TYPES
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 extern int		anongame_matchlists_create(void);
 extern int		anongame_matchlists_destroy(void);
@@ -115,6 +129,12 @@ extern void		anongame_set_joined(t_anongame * a, char joined);
 
 extern int		handle_w3route_packet(t_connection * c, t_packet const * const packet);
 extern int		handle_anongame_join(t_connection * c);
+
+/* Currently used by WOL RAL2 and YURI clients*/
+extern const char * anongame_get_map_from_prefs(int queue, t_clienttag clienttag);
+}
+
+}
 
 #endif
 #endif

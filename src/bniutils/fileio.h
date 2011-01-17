@@ -20,14 +20,20 @@
 #ifndef INCLUDED_FILEIO_PROTOS
 #define INCLUDED_FILEIO_PROTOS
 
+#include <cstdio>
 #define JUST_NEED_TYPES
-#include <stdio.h>
-#include "compat/uint.h"
+# include "compat/uint.h"
 #undef JUST_NEED_TYPES
 
-extern void file_rpush(FILE *f);
+namespace pvpgn
+{
+
+namespace bni
+{
+
+extern void file_rpush(std::FILE *f);
 extern void file_rpop(void);
-extern void file_wpush(FILE *f);
+extern void file_wpush(std::FILE *f);
 extern void file_wpop(void);
 
 extern t_uint8 file_readb(void);
@@ -41,5 +47,8 @@ extern int file_writew_be(t_uint16 u);
 extern int file_writed_le(t_uint32 u);
 extern int file_writed_be(t_uint32 u);
 
+}
+
+}
 #endif
 #endif

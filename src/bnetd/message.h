@@ -32,6 +32,12 @@
 
 #endif
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 typedef enum
 {
     message_type_adduser,
@@ -52,27 +58,37 @@ typedef enum
     message_type_emote,
     message_type_uniqueid,
     message_type_mode,
-
+    message_type_kick,
+    message_type_quit,
+    
     /**
-    *   IRC specific messages
+    *  IRC specific messages
     */
+    message_type_nick,
     message_type_notice,
+    message_type_namreply,
+    message_type_topic,
 
     /**
     *  Westwood Online Extensions
     */
+    message_type_host,
+    message_type_invmsg,
+    message_type_page,
     message_wol_joingame,
-    message_wol_gameopt_owner,
-    message_wol_gameopt_join,
+    message_type_gameopt_talk,
+    message_type_gameopt_whisper,
     message_wol_start_game,
-    message_wol_page,
+    message_wol_advertr,
+    message_wol_chanchk,
+    message_wol_userip,
 
     message_type_null
 } t_message_type;
 
 typedef enum {
     message_class_normal,
-    message_class_charjoin,	/* use char*account (if account isnt d2 char is "") */
+    message_class_charjoin	/* use char*account (if account isnt d2 char is "") */
 } t_message_class;
 
 typedef struct message
@@ -86,11 +102,14 @@ typedef struct message
     /* ---- */
     t_message_type type;       /* format of message */
     t_connection * src;        /* originator message */
-    t_connection * dst;        /* destination */
     char const *   text;       /* text of message */
 }
 #endif
 t_message;
+
+}
+
+}
 
 #endif
 
@@ -99,22 +118,32 @@ t_message;
 #ifndef INCLUDED_MESSAGE_PROTOS
 #define INCLUDED_MESSAGE_PROTOS
 
+#include <cstdio>
 #define JUST_NEED_TYPES
-#include <stdio.h>
 #include "connection.h"
 #undef JUST_NEED_TYPES
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 extern char * message_format_line(t_connection const * c, char const * in);
-extern t_message * message_create(t_message_type type, t_connection * src, t_connection * dst, char const * text);
+extern t_message * message_create(t_message_type type, t_connection * src, char const * text);
 extern int message_destroy(t_message * message);
 extern int message_send(t_message * message, t_connection * dst);
 extern int message_send_all(t_message * message);
 extern int message_send_admins(t_connection * src, t_message_type type, char const * text);
-  
+
 /* the following are "shortcuts" to avoid calling message_create(), message_send(), message_destroy() */
 extern int message_send_text(t_connection * dst, t_message_type type, t_connection * src, char const * text);
 extern int message_send_formatted(t_connection * dst, char const * text);
-extern int message_send_file(t_connection * dst, FILE * fd);
+extern int message_send_file(t_connection * dst, std::FILE * fd);
+
+}
+
+}
 
 #endif
 #endif

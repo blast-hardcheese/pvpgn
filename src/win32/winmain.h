@@ -15,16 +15,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+#ifdef WIN32_GUI
 #ifndef __WINMAIN_H__
 #define __WINMAIN_H__
 
-#include <stdarg.h>
-#include "common/eventlog.h"
+namespace pvpgn
+{
 
-extern int gui_printf(const char *format, ...);
+namespace bnetd
+{
+          
 extern void guiOnUpdateUserList(void);
 
-extern int gui_lvprintf(t_eventlog_level l, const char *format, va_list arglist);
-extern int gui_lprintf(t_eventlog_level l, const char *format, ...);
+}
 
+}
+
+#endif
 #endif

@@ -18,56 +18,43 @@
 #ifndef INCLUDED_D2CS_SETUP_H
 #define INCLUDED_D2CS_SETUP_H
 
-/* FIXME: what is this for? */
-#ifndef D2CS
-# define D2CS
-#endif
-
-
-#ifndef min
-#  define min(a,b) (((a)>(b))?(b):(a))
-#endif
-#ifndef max
-# define max(a,b) (((a)>(b))?(a):(b))
-#endif
-
 #define tf(a)	 ((a)?1:0)
 
 #define strcmp_charname		strcasecmp
 #define strncmp_charname	strncasencmp
 
-#define BEGIN_LIST_TRAVERSE_DATA(list,data) \
+#define BEGIN_LIST_TRAVERSE_DATA(list,data,type) \
 {\
 	t_elem * curr_elem_;\
-	for (curr_elem_=list_get_first(list); curr_elem_ && (data=elem_get_data(curr_elem_)); \
+	for (curr_elem_=list_get_first(list); curr_elem_ && (data=(type*)elem_get_data(curr_elem_)); \
 		curr_elem_=elem_get_next(list,curr_elem_))
 
 #define END_LIST_TRAVERSE_DATA() \
 }
 
-#define BEGIN_LIST_TRAVERSE_DATA_CONST(list,data)\
+#define BEGIN_LIST_TRAVERSE_DATA_CONST(list,data,type)\
 {\
 	t_elem const * curr_elem_;\
-	for (curr_elem_=list_get_first_const(list); curr_elem_ && (data=elem_get_data(curr_elem_)); \
+	for (curr_elem_=list_get_first_const(list); curr_elem_ && (data=(type*)elem_get_data(curr_elem_)); \
 		curr_elem_=elem_get_next_const(list,curr_elem_))
 
 #define END_LIST_TRAVERSE_DATA_CONST() \
 }
 
-#define BEGIN_HASHTABLE_TRAVERSE_DATA(hashtable,data)\
+#define BEGIN_HASHTABLE_TRAVERSE_DATA(hashtable,data,type)\
 {\
 	t_entry * curr_entry_;\
-	for (curr_entry_=hashtable_get_first(hashtable); curr_entry_ && (data=entry_get_data(curr_entry_));\
+	for (curr_entry_=hashtable_get_first(hashtable); curr_entry_ && (data=(type*)entry_get_data(curr_entry_));\
 		curr_entry_=entry_get_next(curr_entry_))
 
 #define END_HASHTABLE_TRAVERSE_DATA()	\
 }
 
-#define BEGIN_HASHTABLE_TRAVERSE_MATCHING_DATA(hashtable,data,hash)\
+#define BEGIN_HASHTABLE_TRAVERSE_MATCHING_DATA(hashtable,data,hash,type)\
 {\
 	t_entry * curr_entry_;\
 	for (curr_entry_=hashtable_get_first_matching(hashtable,hash); \
-		curr_entry_ && (data=entry_get_data(curr_entry_)); \
+		curr_entry_ && (data=(type*)entry_get_data(curr_entry_)); \
 		curr_entry_ = entry_get_next_matching(curr_entry_))
 
 #define END_HASHTABLE_TRAVERSE_DATA()	\
@@ -82,13 +69,6 @@
 #define NELEMS(s)		sizeof(s)/sizeof(s[0])
 
 #define MAX_SAVEFILE_SIZE	32 * 1024
-#define MAX_CHARNAME_LEN	16
-#define MAX_GAMENAME_LEN	16
-#define MAX_GAMEPASS_LEN	16
-#define MAX_GAMEDESC_LEN	32
-#define MAX_ACCTNAME_LEN	16
-#define MAX_REALMNAME_LEN	32
-#define MIN_NAME_LEN		2
 #define MAX_CHAR_PER_GAME	8
 #define D2CS_SERVER_PORT	6113
 #define MAX_GAME_IDLE_TIME	0
@@ -107,14 +87,14 @@
 
 #define MAJOR_VERSION_EQUAL(v1,v2,mask)         (((v1) & (mask)) == ((v2) & (mask)))
 
-				
+
 #ifndef D2CS_DEFAULT_CONF_FILE
 # define D2CS_DEFAULT_CONF_FILE       "conf/d2cs.conf"
 #endif
 
-#define DEFAULT_LOG_FILE	"/usr/local/var/d2cs.log"
+#define DEFAULT_LOG_FILE	"/usr/local/var/d2cs.std::log"
 #define DEFAULT_LOG_LEVELS	"info,warn,error"
-#define DEFAULT_MEMLOG_FILE	"/tmp/d2cs-mem.log"
+#define DEFAULT_MEMLOG_FILE	"/tmp/d2cs-mem.std::log"
 
 #define D2CS_SERVER_ADDRS	"0.0.0.0"
 #define D2GS_SERVER_LIST	"192.168.0.1"

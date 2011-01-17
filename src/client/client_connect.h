@@ -19,24 +19,6 @@
 #ifndef INCLUDED_CLIENT_CONNECT_PROTOS
 #define INCLUDED_CLIENT_CONNECT_PROTOS
 
-#define JUST_NEED_TYPES
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#ifdef HAVE_SYS_SOCKET_H
-# include <sys/socket.h>
-#endif
-#include "compat/socket.h"
-#ifdef HAVE_NETINET_IN_H
-# include <netinet/in.h>
-#endif
-#include "compat/netinet_in.h"
-#ifdef HAVE_ARPA_INET_H
-# include <arpa/inet.h>
-#endif
-#undef JUST_NEED_TYPES
-
-
 // Diablo 1.09b
 #define CLIENT_VERSIONID_DRTL   0x0000002a
 #define CLIENT_GAMEVERSION_DRTL 0x01000902
@@ -93,7 +75,18 @@
 #define CLIENT_COUNTRYINFO_109_LANGSTR_USENGLISH   "ENU"
 #define CLIENT_COUNTRYINFO_109_COUNTRYNAME_USA     "United States"
 
+#include "compat/psock.h"
+
+namespace pvpgn
+{
+
+namespace client
+{
+
 extern int client_connect(char const * progname, char const * servname, unsigned short servport, char const * cdowner, char const * cdkey, char const * clienttag, struct sockaddr_in * saddr, unsigned int * sessionkey, unsigned int * sessionnum, char const * archtag, char const * gamelang);
 
+}
+
+}
 #endif
 #endif

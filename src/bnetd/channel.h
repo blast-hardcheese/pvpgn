@@ -32,19 +32,25 @@
 
 #ifdef CHANNEL_INTERNAL_ACCESS
 
+#include <cstdio>
+
 #ifdef JUST_NEED_TYPES
-# include <stdio.h>
 # include "connection.h"
 # include "common/list.h"
 #else
 # define JUST_NEED_TYPES
-# include <stdio.h>
 # include "connection.h"
 # include "common/list.h"
 # undef JUST_NEED_TYPES
 #endif
 
 #endif
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 #ifdef CHANNEL_INTERNAL_ACCESS
 typedef struct channelmember
@@ -78,29 +84,30 @@ typedef struct channel
     char const *      shortname;  /* short "alias" for permanent channels, NULL if none */
     char const *      country;
     char const *      realmname;
-    t_channel_flags   flags;
+    unsigned int      flags;
     int		      maxmembers;
     int		      currmembers;
-    char const *      clienttag;
+    t_clienttag       clienttag;
     unsigned int      id;
     t_channelmember * memberlist;
     t_list *          banlist;    /* of char * */
     char *            logname;    /* NULL if not logged */
-    FILE *            log;        /* NULL if not logging */
-    
+    std::FILE *       log;        /* NULL if not logging */
+
     /**
     *  Westwood Online Extensions
     */
-    char const *      gameOwner;
-    int               gameOwnerIP;
+    int               minmembers;
 
     int               gameType;
-    int               gameTournament;
-
-    char const *      gameOptions;
+    char *            gameExtension;
 }
 #endif
 t_channel;
+
+}
+
+}
 
 #endif
 
@@ -112,25 +119,33 @@ t_channel;
 #include "connection.h"
 #include "message.h"
 #include "common/list.h"
+#include "common/tag.h"
 #undef JUST_NEED_TYPES
 
 #define CHANNEL_NAME_BANNED "THE VOID"
 #define CHANNEL_NAME_KICKED "THE VOID"
 #define CHANNEL_NAME_CHAT   "Chat"
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 extern int channel_set_userflags(t_connection * c);
-extern t_channel * channel_create(char const * fullname, char const * shortname, char const * clienttag, int permflag, int botflag, int operflag, int logflag, char const * country, char const * realmname, int maxmembers, int moderated, int clan,int autoname) ;
+extern t_channel * channel_create(char const * fullname, char const * shortname, t_clienttag clienttag, int permflag, int botflag, int operflag, int logflag, char const * country, char const * realmname, int maxmembers, int moderated, int clanflag, int autoname, t_list * channellist);
+extern t_channel * channel_create(char const * fullname, char const * shortname, t_clienttag clienttag, int permflag, int botflag, int operflag, int logflag, char const * country, char const * realmname, int maxmembers, int moderated, int clanflag, int autoname);
 extern int channel_destroy(t_channel * channel, t_elem ** elem);
 extern char const * channel_get_name(t_channel const * channel);
 extern char const * channel_get_shortname(t_channel const * channel);
-extern char const * channel_get_clienttag(t_channel const * channel);
-extern t_channel_flags channel_get_flags(t_channel const * channel);
-extern int channel_set_flags(t_channel * channel, t_channel_flags flags);
+extern t_clienttag channel_get_clienttag(t_channel const * channel);
+extern unsigned channel_get_flags(t_channel const * channel);
+extern int channel_set_flags(t_channel * channel, unsigned flags);
 extern int channel_get_permanent(t_channel const * channel);
 extern unsigned int channel_get_channelid(t_channel const * channel);
 extern int channel_set_channelid(t_channel * channel, unsigned int channelid);
 extern int channel_add_connection(t_channel * channel, t_connection * connection);
-extern int channel_del_connection(t_channel * channel, t_connection * connection);
+extern int channel_del_connection(t_channel * channel, t_connection * connection, t_message_type mess, char const * text);
 extern void channel_update_latency(t_connection * conn);
 extern void channel_update_userflags(t_connection * conn);
 extern void channel_message_log(t_channel const * channel, t_connection * me, int fromuser, char const * text);
@@ -160,20 +175,18 @@ extern int channellist_get_length(void);
 /**
 *  Westwood Online Extensions
 */
-extern char const * channel_wol_get_game_owner(t_channel const * channel);
-extern int channel_wol_set_game_owner(t_channel * channel, char const * gameOwner);
-
-extern int channel_wol_get_game_ownerip(t_channel const * channel);
-extern int channel_wol_set_game_ownerip(t_channel * channel, int gameOwnerIP);
+extern int channel_get_min(t_channel const * channel);
+extern int channel_set_min(t_channel * channel, int minmembers);
 
 extern int channel_wol_get_game_type(t_channel const * channel);
 extern int channel_wol_set_game_type(t_channel * channel, int gameType);
 
-extern int channel_wol_get_game_tournament(t_channel const * channel);
-extern int channel_wol_set_game_tournament(t_channel * channel, int tournament);
+extern char const * channel_wol_get_game_extension(t_channel const * channel);
+extern int channel_wol_set_game_extension(t_channel * channel, char const * gameExtension);
 
-extern char const * channel_wol_get_game_options(t_channel const * channel);
-extern int channel_wol_set_game_options(t_channel * channel, char const * gameOptions);
+}
+
+}
 
 #endif
 #endif

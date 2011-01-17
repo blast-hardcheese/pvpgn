@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2001  Marco Ziech (mmz@gmx.net)
+ * Copyright (C) 2007  Pelish (pelish@gmail.com)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,7 +23,22 @@
 #ifndef INCLUDED_HANDLE_IRC_PROTOS
 #define INCLUDED_HANDLE_IRC_PROTOS
 
-extern int handle_irc_packet(t_connection * conn,t_packet const * const packet);
+#include "common/packet.h"
+#include "connection.h"
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
+extern int handle_irc_con_command(t_connection * conn, char const * command, int numparams, char ** params, char * text);
+extern int handle_irc_log_command(t_connection * conn, char const * command, int numparams, char ** params, char * text);
+extern int handle_irc_welcome(t_connection * conn);
+
+}
+
+}
 
 #endif
 #endif

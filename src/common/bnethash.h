@@ -27,7 +27,12 @@
 # undef JUST_NEED_TYPES
 #endif
 
+namespace pvpgn
+{
+
 typedef t_uint32 t_hash[5];
+
+}
 
 #endif
 
@@ -36,10 +41,18 @@ typedef t_uint32 t_hash[5];
 #ifndef INCLUDED_BNETHASH_PROTOS
 #define INCLUDED_BNETHASH_PROTOS
 
+namespace pvpgn
+{
+
 extern int bnet_hash(t_hash * hashout, unsigned int size, void const * data);
+extern int sha1_hash(t_hash * hashout, unsigned int size, void const * data);
+extern int little_endian_sha1_hash(t_hash * hashout, unsigned int size, void const * data);
 extern int hash_eq(t_hash const h1, t_hash const h2) ;
 extern char const * hash_get_str(t_hash const hash);
+extern char const * little_endian_hash_get_str(t_hash const hash);
 extern int hash_set_str(t_hash * hash, char const * str);
+
+}
 
 #endif
 #endif

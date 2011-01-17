@@ -19,9 +19,17 @@
 #ifndef INCLUDED_BNI_H
 #define INCLUDED_BNI_H
 
+#include <cstdio>
+
 #ifndef BNI_MAXICONS
 #define BNI_MAXICONS 4096
 #endif
+
+namespace pvpgn
+{
+
+namespace bni
+{
 
 typedef struct {
 	unsigned int id;		/* Icon ID */
@@ -30,20 +38,24 @@ typedef struct {
 	unsigned int unknown;	/* 0x00000000 */
 } t_bniicon;
 
+struct bni_iconlist_struct {
+	t_bniicon icon[BNI_MAXICONS];
+}; /* The icons */
+
 typedef struct {
 	unsigned int unknown1;	/* 0x00000010 */
 	unsigned int unknown2;	/* 0x00000001 */
 	unsigned int numicons;	/* Number of icons */
 	unsigned int dataoffset;	/* Start of TGA-File */
-	struct {
-		t_bniicon icon[BNI_MAXICONS];
-	} *icons; /* The icons */
+	struct bni_iconlist_struct *icons; /* The icons */
 } t_bnifile;
 
 
-#include <stdio.h>
+extern t_bnifile * load_bni(std::FILE *f);
+extern int write_bni(std::FILE *f, t_bnifile *b);
 
-extern t_bnifile * load_bni(FILE *f);
-extern int write_bni(FILE *f, t_bnifile *b);
+}
+
+}
 
 #endif

@@ -1,5 +1,41 @@
 PvPGN Version History:
 
+ Changelog for SVN TRUNK (since 1.8.5)
+=========================================
+ -- The list of changes mentioned in here is most propably incomplete.
+ For more details also take a peek view into conversion-changelog.
+
+[CMAKE]
+  -- added cmake build system support
+
+[WOL]
+  -- completed support for all WOL clients (read IGNOREME.TXT)
+  -- disable account creation via irc/wol when new_accounts=false
+  -- added support to allow/deny WOL clients in bnetd.conf
+  -- added support for battle clans
+  -- added various protocol related fixes
+  -- added apiregister support
+  -- added autoupdate support for WOLv2 clients
+  -- added variables into bnetd.conf for wol FTP update server specification
+  -- fixed voice flag not shown for clients in channel
+  -- fixed bug in RedAlert2/Yuri when game owner changes maximum players
+  -- added QuickMatch support for RA2/YURI
+  -- added Ladders support for Tiberian Sun, Firestorm, Red Alert 2
+     and Yuri's Revenge clients
+
+[WAR3]
+  -- added support for SRP3 based account creation/login
+  -- added support for passchange for SRP3 based accounts
+
+[MISC]
+  -- added /muteacct and /unmuteacct commands for admins
+  -- added /clan whisper subcommand
+  -- added /clan create/invite/disband subcommands
+  -- added clan_min_invites to bnetd.conf for miminum accepted
+     invitations need in clan-creating process (default is 2)
+  -- added support for multilingual motd
+  -- added /ipscan command for admins
+
  ChangeLog for 1.8.5 (since 1.8.4)
 =========================================
 
@@ -11,12 +47,7 @@ PvPGN Version History:
   -- fixed bug when clanmember can promote/demote any
      member of his clan by sending proper rankupdate packet
   -- fixed bug when a hosting bot was able to create a 
-     custom game which caused clients to disconnect
-  -- fixed bug when clanmember without permission
-     was able to disband clan
-
-[SQL]
-  -- fix potential SQL injection via clan MOTD
+     custom game which caused clients to disconect
 
 [MISC]
   -- updated IX86 autoupdate according to STAR/SEXP 1.16.1
@@ -31,46 +62,30 @@ PvPGN Version History:
   -- fixed MySQL reconnection issues for MySQL >= 5.0.19
 
 [IRC/WOL]
-  -- fixed client not getting proper information when account 
-     is already in use
-
-[VCHECK]
-  -- added STAR/SEXP IX86 1.15.3 vcheck entries
+  -- fixed bug when client does not got proper information
+     when account is already in use
 
 [MISC]
-  -- fixed Voiced clients unable to talk in moderated channels
-  -- updated STAR/SEXP IX86 autoupdate entries according
-     to latest client versions
-  -- fixed admins not being able to join private clan channels
-  -- fixed clan leaders not being channel ops in their clan channel
+  -- fixed bug when Voiced client was not possible to talk in
+     moderated channels
 
+ 
  ChangeLog for 1.8.3 (since 1.8.2)
 =========================================
 
 [WOL]
   -- added Dune 2000 Support
-  -- fixed possible steal account throught hardcoded password
   -- fixed malformed time format in startgame message
   -- fixed log warnings/errors rising in login process
-  -- fixed RA2/YURI bug when host of game could not
-     change max players
-
-[IRC]
-  -- added some missing channel modes
-  -- added proper messages when client was baned from channel
-     or when channel is full
-  -- fixed bug when IIRC was not stored as last used client tag
 
 [MISC]
   -- fixed malformed output by /cg list command
-  -- updated IX86 autoupdate with latest clients versions
 
 [VCHECK]
-  -- added WAR3/W3XP IX86 1.19a/1.19b/1.21b/1.22a vcheck entries
-  -- added STAR/SEXP IX86 1.15.2 vcheck entries
-  -- added D2DV/D2XP IX86 1.12a vcheck entries
-  -- rewritten all STAR/SEXP/W2BN/DRTL IX86 vcheck entries
-     to match new ver-ix86-1.mpq file (this fixes connection
+  -- added WAR3/W3XP IX86 1.21b vcheck entries
+  -- added STAR/SEXP IX86 1.51.2 vcheck entries
+  -- rewrited all STAR/SEXP/W2BN/DRTL IX86 vcheck entries
+     to match new ver-ix86-1.mpq file (this fixes connecting
      problems on Windows Vista systems)
 
  ChangeLog for 1.8.2 (since 1.8.1)
@@ -80,10 +95,7 @@ PvPGN Version History:
   -- fixed possible server crash on raw list command
 
 [SC/BW]
-  -- fixed client crash when displaying empty friendslist
-  
-[D2]
-  -- fixed stat string in D2 open mode 
+  -- fixed client crash when was showed Friends without any item
 
 [VCHECK]
   -- added SC/BW IX86 and XMAC 1.15.1 version check entries

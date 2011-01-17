@@ -26,8 +26,16 @@
 #ifdef HAVE_ARPA_INET_H
 # include <arpa/inet.h>
 #endif
+#ifdef HAVE_WINSOCK2_H
+# include <winsock2.h>
+#endif
+
+namespace pvpgn
+{
 
 extern char const * inet_ntoa(struct in_addr const * addr);
+
+}
 
 #endif
 

@@ -30,6 +30,12 @@
 
 #endif
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 typedef enum
 {
     character_class_none,
@@ -55,7 +61,7 @@ typedef struct character
     char const * name; /* max 15 chars */
     char const * realmname;
     char const * guildname; /* max 3 chars */
-    
+
     /* stored in Battle.net format for now */
     t_uint8      helmgfx;
     t_uint8      bodygfx;
@@ -64,7 +70,7 @@ typedef struct character
     t_uint8      lhandgfx;
     t_uint8      rhandweapon;
     t_uint8      rhandgfx;
-    t_uint8      class;
+    t_uint8      chclass;
     t_uint8      level;
     t_uint8      status;
     t_uint8      title;
@@ -98,6 +104,10 @@ typedef struct character
 #endif
 t_character;
 
+}
+
+}
+
 #endif
 
 
@@ -111,7 +121,13 @@ t_character;
 #include "account.h"
 #undef JUST_NEED_TYPES
 
-extern int character_create(t_account * account, t_clienttag clienttag, char const * realmname, char const * name, t_character_class class, t_character_expansion expansion);
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
+extern int character_create(t_account * account, t_clienttag clienttag, char const * realmname, char const * name, t_character_class chclass, t_character_expansion expansion);
 extern char const * character_get_name(t_character const * ch);
 extern char const * character_get_realmname(t_character const * ch);
 extern char const * character_get_playerinfo(t_character const * ch);
@@ -122,6 +138,10 @@ extern int character_verify_charlist(t_character const * ch, char const * charli
 extern int characterlist_create(char const * dirname);
 extern int characterlist_destroy(void);
 extern t_character * characterlist_find_character(char const * realmname, char const * charname);
+
+}
+
+}
 
 #endif
 #endif

@@ -20,8 +20,14 @@
 #define INCLUDED_D2LADDER_H
 
 #include "common/bn_type.h"
-#include "d2cs_protocol.h"
-#include "d2cs_d2dbs_ladder.h"
+#include "common/d2cs_protocol.h"
+#include "common/d2cs_d2dbs_ladder.h"
+
+namespace pvpgn
+{
+
+namespace d2cs
+{
 
 typedef struct
 {
@@ -37,5 +43,9 @@ extern int d2ladder_destroy(void);
 extern int d2ladder_get_ladder(unsigned int * from, unsigned int * count, unsigned int type,
 				t_d2cs_client_ladderinfo const * * info);
 extern int d2ladder_find_character_pos(unsigned int type, char const * charname);
+
+}
+
+}
 
 #endif

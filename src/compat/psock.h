@@ -128,17 +128,17 @@ extern int psock_init(void);               /* a real functions in */
 extern int psock_deinit(void);             /* compat/psock.c      */
 #define psock_errno()                      WSAGetLastError()
 #define psock_socket(pf, t, ps)            socket(pf, t, ps)
-#define psock_getsockopt(s, l, o, v, size) getsockopt(s, l, o, (void *)(v), size)
-#define psock_setsockopt(s, l, o, v, size) setsockopt(s, l, o, (void *)(v), size)
+#define psock_getsockopt(s, l, o, v, size) getsockopt(s, l, o, (char *)(v), size)
+#define psock_setsockopt(s, l, o, v, size) setsockopt(s, l, o, (const char *)(v), size)
 extern int psock_ctl(int sd, int mode);    /* a real function in compat/psock.c */
 #define psock_listen(s, b)                 listen(s, b)
 #define psock_bind(s, a, l)                bind(s, a, l)
 #define psock_accept(s, a, l)              accept(s, a, l)
 #define psock_connect(s, a, l)             connect(s, a, l)
-#define psock_send(s, b, l, f)             send(s, (void *)(b), l, f)
-#define psock_sendto(s, b, l, f, a, al)    sendto(s, (void *)(b), l, f, a, al)
-#define psock_recv(s, b, l, f)             recv(s, (void *)(b), l, f)
-#define psock_recvfrom(s, b, l, f, a, al)  recvfrom(s, (void *)(b), l, f, a, al)
+#define psock_send(s, b, l, f)             send(s, (const char *)(b), l, f)
+#define psock_sendto(s, b, l, f, a, al)    sendto(s, (const char *)(b), l, f, a, al)
+#define psock_recv(s, b, l, f)             recv(s, (char *)(b), l, f)
+#define psock_recvfrom(s, b, l, f, a, al)  recvfrom(s, (char *)(b), l, f, a, al)
 #define psock_shutdown(s, how)             shutdown(s, how)
 #define psock_close(s)                     closesocket(s)
 #define psock_select(s, r, w, e, t)        select(s, r, w, e ,t)
@@ -149,6 +149,38 @@ extern int psock_ctl(int sd, int mode);    /* a real function in compat/psock.c 
 /* (this should be done in compat/inet_aton.h and this isn't a 100% correct implementation anyway -Ross) */
 
 #else /* assume POSIX */
+
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_SOCKET_H
+# include <sys/socket.h>
+#endif
+#ifdef HAVE_NETINET_IN_H
+# include <netinet/in.h>
+#endif
+#ifdef HAVE_NETINET_IP_H
+# include <netinet/ip.h>
+#endif
+#ifdef HAVE_SYS_SELECT_H
+# include <sys/select.h>
+#endif
+#ifdef HAVE_SYS_TIME_H
+# include <sys/time.h>
+#endif
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif
+#ifdef HAVE_ARPA_INET_H
+# include <arpa/inet.h>
+#endif
+#ifdef HAVE_NETDB_H
+# include <netdb.h>
+#endif
+#ifdef HAVE_FCNTL_H
+# include <fcntl.h>
+#endif
+#include <errno.h>
 
 /* protocol families */
 #define PSOCK_PF_INET PF_INET

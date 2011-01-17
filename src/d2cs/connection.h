@@ -25,6 +25,12 @@
 #include "d2charfile.h"
 #include "gamequeue.h"
 
+namespace pvpgn
+{
+
+namespace d2cs
+{
+
 typedef enum
 {
 	conn_state_none		=	0x00,
@@ -59,7 +65,7 @@ typedef struct
 	unsigned short			port;
 	unsigned short			local_port;
 	unsigned int			last_active;
-	t_conn_class			class;
+	t_conn_class			cclass;
 	t_conn_state			state;
 	unsigned int			sessionnum;
 	t_queue				* outqueue;
@@ -79,7 +85,7 @@ typedef int ( * packet_handle_func) (t_connection * c, t_packet * packet);
 typedef struct
 {
 	unsigned int		size;
-	t_conn_state		state;
+	unsigned		state;
 	packet_handle_func	handler;
 } t_packet_handle_table;
 
@@ -94,13 +100,13 @@ extern int conn_check_multilogin(t_connection const * c,char const * charname);
 extern t_connection * d2cs_connlist_find_connection_by_sessionnum(unsigned int sessionnum);
 extern t_connection * d2cs_connlist_find_connection_by_charname(char const * charname);
 extern int conn_handle_socket(t_connection * c);
-extern t_connection * d2cs_conn_create(int sock, unsigned int local_addr, unsigned short local_port, 
+extern t_connection * d2cs_conn_create(int sock, unsigned int local_addr, unsigned short local_port,
 				unsigned int addr, unsigned short port);
 extern int d2cs_conn_destroy(t_connection * c, t_elem ** elem);
 extern int d2cs_conn_get_socket(t_connection const * c);
 extern unsigned int d2cs_conn_get_sessionnum(t_connection const * c);
 extern t_conn_class d2cs_conn_get_class(t_connection const * c);
-extern int d2cs_conn_set_class(t_connection * c, t_conn_class class);
+extern int d2cs_conn_set_class(t_connection * c, t_conn_class cclass);
 extern t_conn_state d2cs_conn_get_state(t_connection const * c);
 extern int d2cs_conn_set_state(t_connection * c, t_conn_state state);
 extern t_queue * * d2cs_conn_get_out_queue(t_connection const * c);
@@ -136,5 +142,9 @@ extern int conn_set_bnetd_sessionnum(t_connection * c, unsigned int sessionnum);
 extern unsigned int conn_get_bnetd_sessionnum(t_connection const * c);
 extern int conn_add_fd(t_connection * c, t_fdwatch_type rw, fdwatch_handler handler);
 extern int connlist_check_timeout(void);
+
+}
+
+}
 
 #endif

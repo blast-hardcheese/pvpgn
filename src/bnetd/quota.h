@@ -18,43 +18,25 @@
 #ifndef INCLUDED_QUOTA_TYPES
 #define INCLUDED_QUOTA_TYPES
 
+#include <ctime>
+
 #ifdef JUST_NEED_TYPES
-# ifdef HAVE_SYS_TYPES_H
-#  include <sys/types.h>
-# endif
-# ifdef TIME_WITH_SYS_TIME
-#  include <sys/time.h>
-#  include <time.h>
-# else
-#   if HAVE_SYS_TIME_H
-#    include <sys/time.h>
-#   else
-#    include <time.h>
-#   endif
-# endif
 # include "common/list.h"
 #else
 # define JUST_NEED_TYPES
-# ifdef HAVE_SYS_TYPES_H
-#  include <sys/types.h>
-# endif
-# ifdef TIME_WITH_SYS_TIME
-#  include <sys/time.h>
-#  include <time.h>
-# else
-#   if HAVE_SYS_TIME_H
-#    include <sys/time.h>
-#   else
-#    include <time.h>
-#   endif
-# endif
 # include "common/list.h"
 # undef JUST_NEED_TYPES
 #endif
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 typedef struct
 {
-    time_t	 inf;
+    std::time_t	 inf;
     unsigned int count;
 } t_qline;
 
@@ -63,5 +45,9 @@ typedef struct
     unsigned int totcount;
     t_list *     list;
 } t_quota;
+
+}
+
+}
 
 #endif

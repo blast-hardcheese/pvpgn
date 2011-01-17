@@ -1,6 +1,6 @@
 /*
   * Abstraction API/layer for the various ways PvPGN can inspect sockets state
-  * 2003 (C) 
+  * 2003 (C)
   *
   * Code is based on the ideas found in thttpd project.
   *
@@ -23,6 +23,49 @@
 #ifndef __INCLUDED_FDWATCH_KQUEUE__
 #define __INCLUDED_FDWATCH_KQUEUE__
 
-extern t_fdw_backend fdw_kqueue;
+#ifdef HAVE_KQUEUE
+
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_EVENT_H
+# include <sys/event.h>
+#endif
+#ifdef HAVE_SYS_TIME_H
+# include <sys/time.h>
+#endif
+
+#include "scoped_array.h"
+#include "fdwbackend.h"
+
+namespace pvpgn
+{
+
+class FDWKqueueBackend: public FDWBackend
+{
+public:
+	explicit FDWKqueueBackend(int nfds_);
+	~FDWKqueueBackend() throw();
+
+	int add(int idx, unsigned rw);
+	int del(int idx);
+	int watch(long timeout_msecs);
+	void handle();
+
+private:
+	int sr;
+	int kq;
+	/* changes to make to kqueue */
+	scoped_array<struct kevent> kqchanges;
+	/* events to investigate */
+	scoped_array<struct kevent> kqevents;
+	/* r/w indices from idx to the kqchanges index where the change is stored */
+	scoped_array<int> rridx, wridx;
+	unsigned nochanges;
+};
+
+}
+
+#endif /* HAVE_KQUEUE */
 
 #endif /* __INCLUDED_FDWATCH_KQUEUE__ */

@@ -29,6 +29,12 @@
 # undef JUST_NEED_TYPES
 #endif
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 typedef struct
 {
     char const * line;
@@ -41,6 +47,10 @@ typedef struct
     char const *  alias;
     t_list *      output; /* of t_output * */
 } t_alias;
+
+}
+
+}
 
 #endif
 
@@ -56,9 +66,19 @@ typedef struct
 #include "connection.h"
 #undef JUST_NEED_TYPES
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 extern int aliasfile_load(char const * filename);
 extern int aliasfile_unload(void);
 extern int handle_alias_command(t_connection * c, char const * text);
+
+}
+
+}
 
 #endif
 #endif

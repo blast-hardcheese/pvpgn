@@ -1,4 +1,4 @@
-/* 
+/*
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -16,6 +16,14 @@
 
 #ifndef INCLUDED_FRIENDS_H
 #define INCLUDED_FRIENDS_H
+
+#include "account.h"
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 typedef struct friend_struct {
    char mutual; /* -1 - unloaded(used to remove deleted elems when reload); 0 - not mutual ; 1 - is mutual */
@@ -38,8 +46,12 @@ extern int friendlist_remove_account(t_list *, t_account *);
 extern int friendlist_remove_username(t_list *, const char *);
 extern t_friend * friendlist_find_account(t_list *, t_account *);
 extern t_friend * friendlist_find_username(t_list *, const char *);
-extern t_friend * friendlist_find_uid(t_list *, int);
+extern t_friend * friendlist_find_uid(t_list *, unsigned);
 
 #endif
+
+}
+
+}
 
 #endif

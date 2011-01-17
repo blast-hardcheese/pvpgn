@@ -15,47 +15,80 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-#ifndef INCLUDED_ADBANNER_TYPES
-#define INCLUDED_ADBANNER_TYPES
+#ifndef INCLUDED_ADBANNER_H
+#define INCLUDED_ADBANNER_H
+
+#include <string>
+#include <map>
 
 #include "common/tag.h"
+#include "common/scoped_ptr.h"
+#include "common/bn_type.h"
 
-typedef struct adbanner
-#ifdef ADBANNER_INTERNAL_ACCESS
+namespace pvpgn
 {
-    unsigned int id;
-    unsigned int extensiontag;
-    unsigned int delay; /* in seconds */
-    unsigned int next; /* adid or 0 */
-    char const * filename;
-    char const * link;
-    t_clienttag	 client;
+
+namespace bnetd
+{
+
+class AdBanner
+{
+public:
+	AdBanner(unsigned id_, bn_int extag, unsigned delay_, unsigned next_, const std::string& fname, const std::string& link_, t_clienttag client_, t_gamelang lang_);
+	~AdBanner() throw();
+
+	unsigned getId() const;
+	unsigned getNextId() const;
+	unsigned getExtensionTag() const;
+	char const * getFilename() const;
+	char const * getLink() const;
+	t_clienttag getClient() const;
+	t_gamelang getGameLang() const;
+
+private:
+	unsigned id;
+	unsigned extensiontag;
+	unsigned delay; /* in seconds */
+	unsigned next; /* adid or 0 */
+	const std::string filename;
+	const std::string link;
+	t_clienttag client;
+	t_gamelang lang;
+};
+
+class AdBannerComponent
+{
+public:
+	explicit AdBannerComponent(const std::string& fname);
+	~AdBannerComponent() throw();
+
+	typedef std::pair<t_clienttag, t_gamelang> AdKey;
+	const AdBanner* pick(t_clienttag ctag, t_gamelang lang, unsigned prev_id) const;
+	const AdBanner* find(t_clienttag ctag, t_gamelang lang, unsigned id) const;
+
+private:
+	typedef std::map<unsigned, AdBanner> AdIdMap;
+	typedef std::map<AdKey, AdIdMap> AdCtagMap;
+	typedef std::map<unsigned, AdIdMap::const_iterator> AdIdRefMap;
+	typedef std::map<AdKey, AdIdRefMap> AdCtagRefMap;
+
+	AdCtagMap adlist;
+	AdCtagRefMap adlist_init;
+	AdCtagRefMap adlist_start;
+	AdCtagRefMap adlist_norm;
+
+	const AdBanner* pick(AdKey adKey, unsigned prev_id) const;
+	const AdBanner* find(AdKey adKey, unsigned id) const;
+	const AdBanner* finder(AdKey adKey, unsigned id) const;
+	const AdBanner* findRandom(const AdCtagRefMap& where, AdKey adKey) const;
+	const AdBanner* randomFinder(const AdCtagRefMap& where, AdKey adKey) const;
+	void insert(AdCtagRefMap& where, const std::string& fname, unsigned id, unsigned delay, const std::string& link, unsigned next_id, const std::string& client, const std::string& lang);
+};
+
+extern scoped_ptr<AdBannerComponent> adbannerlist;
+
 }
-#endif
-t_adbanner;
 
-#endif
+}
 
-
-/*****/
-#ifndef JUST_NEED_TYPES
-#ifndef INCLUDED_ADBANNER_PROTOS
-#define INCLUDED_ADBANNER_PROTOS
-
-#define JUST_NEED_TYPES
-#include "connection.h"
-#undef JUST_NEED_TYPES
-
-extern t_adbanner * adbanner_pick(t_connection const * c, unsigned int prev_id);
-extern t_adbanner * adbanner_get(t_connection const * c, unsigned int id);
-extern unsigned int adbanner_get_id(t_adbanner const * ad);
-extern unsigned int adbanner_get_extensiontag(t_adbanner const * ad);
-extern char const * adbanner_get_filename(t_adbanner const * ad);
-extern char const * adbanner_get_link(t_adbanner const * ad);
-extern t_clienttag  adbanner_get_client(t_adbanner const * ad);
-
-extern int adbannerlist_create(char const * filename);
-extern int adbannerlist_destroy(void);
-
-#endif
 #endif

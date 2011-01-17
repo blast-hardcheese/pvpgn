@@ -14,67 +14,14 @@ NOTE: If updating through several versions (example if updating from 1.7.1 to
 version in between and including the last one (ex. you have to go through 
 1.7.1 to 1.7.2 update info, then 1.7.2 to 1.7.3, and so on until 1.7.4 to 1.7.5)
 
- Updating from 1.8.4 to 1.8.5
-===================================
-
+ Updating from 1.99.0-CVS
+=========================
 Configuration files changed:
-- conf/versioncheck.conf : added STAR/SEXP IX86 vcheck entries
-- conf/autoupdate.conf : STAR/SEXP related updates
-- conf/sql_DB_layout.conf : changed field sizes in clan table
-- conf/sql_DB_layout2.conf : changed field sizes in clan table
+- conf/d2cs.conf : added optional: "game_maxlevel" config option which
+	which needs to be given in the case of Diablo MODs with a level > 255
 
- Updating from 1.8.3 to 1.8.4
-===================================
-
-Configuration files changed:
-- conf/versioncheck.conf : added STAR/SEXP IX86 vcheck entries
-- conf/autoupdate.conf : STAR/SEXP related updates
-
- Updating from 1.8.2 to 1.8.3
-===================================
-
-Configuration files changed:
-- conf/channels.conf : added channels needed by DUNE 2000 clients
-- conf/versioncheck.conf : added WAR3/W3XP/D2DV/D2XP IX86 entries and
-  rewritten all STAR/SEXP/W2BN/DRTL IX86 vcheck entries
-- conf/supportfile.conf : added needed ver-ix86-1.mpq support file
-- conf/bnmaps.conf : updated ladder map lineup to be equal to battle.net
-- conf/autoupdate.conf : WAR3/W3XP/D2DV/D2XP/STAR/SEXP related updates
-
- Updating from 1.8.1 to 1.8.2
-===================================
-
-Configuration files changed:
-- conf/versioncheck.conf : added SC/BW entries
-
- Updating from 1.8.0 to 1.8.1
-===================================
-Configuration files changed:
-
-- conf/versioncheck.conf : added W3/SC entries entries
-- conf/bnetd.conf : added account_force_username option
-- conf/supportfile.conf : removed unused support files from the list
-- conf/sql_DB_layout.conf : added WOL table
-- conf/sql_DB_layout2.conf : added WOL table
-- conf/address_translation.conf : added support for WOL servserv
-    address translation
-
- Updating from 1.8.0rc2 to 1.8.0
-====================================
-
-Configuration files changed:
-- conf/versioncheck.conf : added W3/SC entries entries
-
- Updating from 1.8.0rc1 to 1.8.0rc2
-====================================
-
-Configuration files changed:
-- conf/versioncheck.conf : added W3 entries
-- conf/autoupdate.conf : W3 related updates
-
- Updating from 1.7.9 to 1.8.0rc1
-=================================
-
+ Updating from 1.7.9 to 1.7.10
+===============================
 Configuration files changed:
 - conf/sql_DB_layout2.conf : added creation of two additional indices
 - conf/versioncheck.conf : added D2 / W3 entries + cleanups
@@ -82,7 +29,6 @@ Configuration files changed:
 
  Updating from 1.7.8 to 1.7.9
 ==============================
-
 Configuration files changed:
 - conf/d2cs.conf : added pid entry
 - conf/d2dbs.conf : added pid entry
@@ -97,7 +43,6 @@ Configuration files added:
 
  Updating from 1.7.7 to 1.7.8
 ==============================
-
 Configuration files changed:
 - conf/sql_DB_layout.conf : includes changes needed for the new "username" SQL 
     field used to fix a MAJOR bug that shows up with case sensitive SQL engines
@@ -124,8 +69,6 @@ Configuration files changed:
 
  Updating from 1.7.3 to 1.7.4
 ==============================
-
-Configuration files changed:
 - conf/bnetd.conf : added "ladder_prefix" parameter to allow only games with 
     matching gamename to be counted as ladder (applies only to alternative 
     ladder game types as specified by "ladder_games" directive)

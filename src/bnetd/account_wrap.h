@@ -32,6 +32,12 @@
 #include "common/tag.h"
 #undef JUST_NEED_TYPES
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 /* convenience functions */
 extern unsigned int account_get_numattr_real(t_account * account, char const * key, char const * fn, unsigned int ln);
 #define account_get_numattr(A,K) account_get_numattr_real(A,K,__FILE__,__LINE__)
@@ -41,8 +47,19 @@ extern int account_get_boolattr_real(t_account * account, char const * key, char
 #define account_get_boolattr(A,K) account_get_boolattr_real(A,K,__FILE__,__LINE__)
 extern int account_set_boolattr(t_account * account, char const * key, int val);
 
+/* warning: unlike the other account_get_*attr functions this one allocates memory for returning data - its up to the caller to clean it up */
+extern char const * account_get_rawattr_real(t_account * account, char const * key, char const * fn, unsigned int ln);
+#define account_get_rawattr(A,K) account_get_rawattr_real(A,K,__FILE__,__LINE__)
+extern int account_set_rawattr(t_account * account, char const * key, char const * val, int length);
+
 extern char const * account_get_pass(t_account * account);
 extern int account_set_pass(t_account * account, char const * passhash1);
+
+extern char const * account_get_salt(t_account * account);
+extern int account_set_salt(t_account * account, char const * salt);
+
+extern char const * account_get_verifier(t_account * account);
+extern int account_set_verifier(t_account * account, char const * verifier);
 
 /* authorization */
 extern int account_get_auth_admin(t_account * account, char const * channelname);
@@ -62,6 +79,8 @@ extern int account_get_auth_createladdergame(t_account * account);
 extern int account_get_auth_joinladdergame(t_account * account);
 extern int account_get_auth_lock(t_account * account);
 extern int account_set_auth_lock(t_account * account, int val);
+extern int account_set_auth_mute(t_account * account, int val);
+extern int account_get_auth_mute(t_account * account);
 
 /* profile */
 extern char const * account_get_sex(t_account * account); /* the profile attributes are updated directly in bnetd.c */
@@ -90,6 +109,7 @@ extern int account_inc_normal_losses(t_account * account, t_clienttag clienttag)
 extern int account_set_normal_losses(t_account * account, t_clienttag clienttag, unsigned losses);
 extern unsigned int account_get_normal_draws(t_account * account, t_clienttag clienttag);
 extern int account_inc_normal_draws(t_account * account, t_clienttag clienttag);
+extern int account_set_normal_draws(t_account * account, t_clienttag clienttag, unsigned draws);
 extern unsigned int account_get_normal_disconnects(t_account * account, t_clienttag clienttag);
 extern int account_inc_normal_disconnects(t_account * account, t_clienttag clienttag);
 extern int account_set_normal_disconnects(t_account * account, t_clienttag clienttag,unsigned discs);
@@ -118,6 +138,7 @@ extern int account_inc_ladder_wins(t_account * account, t_clienttag clienttag, t
 extern int account_set_ladder_wins(t_account * account, t_clienttag clienttag, t_ladder_id id,unsigned wins);
 extern unsigned int account_get_ladder_losses(t_account * account, t_clienttag clienttag, t_ladder_id id);
 extern int account_inc_ladder_draws(t_account * account, t_clienttag clienttag, t_ladder_id id);
+extern int account_set_ladder_draws(t_account * account, t_clienttag clienttag, t_ladder_id id,unsigned draws);
 extern unsigned int account_get_ladder_draws(t_account * account, t_clienttag clienttag, t_ladder_id id);
 extern int account_inc_ladder_losses(t_account * account, t_clienttag clienttag, t_ladder_id id);
 extern int account_set_ladder_losses(t_account * account, t_clienttag clienttag, t_ladder_id id,unsigned losses);
@@ -139,7 +160,7 @@ extern int account_set_ladder_last_result(t_account * account, t_clienttag clien
 extern unsigned int account_get_normal_level(t_account * account, t_clienttag clienttag);
 extern int account_set_normal_level(t_account * account, t_clienttag clienttag, unsigned int level);
 extern unsigned int account_get_normal_class(t_account * account, t_clienttag clienttag);
-extern int account_set_normal_class(t_account * account, t_clienttag clienttag, unsigned int class);
+extern int account_set_normal_class(t_account * account, t_clienttag clienttag, unsigned int chclass);
 extern unsigned int account_get_normal_diablo_kills(t_account * account, t_clienttag clienttag);
 extern int account_set_normal_diablo_kills(t_account * account, t_clienttag clienttag, unsigned int diablo_kills);
 extern unsigned int account_get_normal_strength(t_account * account, t_clienttag clienttag);
@@ -165,7 +186,7 @@ extern unsigned int account_get_friend( t_account * account, int friendnum);
 extern int account_get_friendcount( t_account * account );
 extern int account_add_friend( t_account * my_acc, t_account * facc );
 extern int account_remove_friend( t_account * account, int friendnum );
-extern int account_remove_friend2( t_account * account, const char * friend );
+extern int account_remove_friend2( t_account * account, const char * friendname );
 
 extern char const * race_get_str(unsigned int race);
 extern int account_set_admin( t_account * account );
@@ -212,12 +233,16 @@ extern int account_is_operator_or_admin(t_account * account, char const * channe
 extern int account_set_email(t_account * account, char const * email);
 extern char const * account_get_email(t_account * account);
 
-/**
-*  Westwood Online Extensions
-*/
+/*  Westwood Online Extensions */
 extern char const * account_get_wol_apgar(t_account * account);
 extern int account_set_wol_apgar(t_account * account, char const * apgar);
+extern int account_get_locale(t_account * account);
+extern int account_set_locale(t_account * account, int locale);
+extern int account_get_ladder_points(t_account * account, t_clienttag clienttag, t_ladder_id id);
+extern int account_set_ladder_points(t_account * account, t_clienttag clienttag, t_ladder_id id, unsigned int points);
+}
 
+}
 
 #endif
 #endif

@@ -18,7 +18,22 @@
 #ifndef INCLUDED_GETTIMEOFDAY_TYPES
 #define INCLUDED_GETTIMEOFDAY_TYPES
 
+#ifdef HAVE_SYS_TIME_H
+# include <sys/time.h>
+#endif
+
 #ifndef HAVE_GETTIMEOFDAY
+
+namespace pvpgn
+{
+
+/* FIXME: these might already exist even if gettimeofday() doesn't */
+struct timeval
+{
+    long tv_sec;
+    long tv_usec;
+};
+
 
 struct timezone
 {
@@ -26,11 +41,9 @@ struct timezone
     int tz_dsttime;
 };
 
-#endif
+}
 
-/* we always require select thus we always require timeval which should
- * be available through portable socket layer */
-#include "psock.h"
+#endif
 
 #endif
 
@@ -39,7 +52,12 @@ struct timezone
 #define INCLUDED_GETTIMEOFDAY_PROTOS
 
 #ifndef HAVE_GETTIMEOFDAY
+namespace pvpgn
+{
+
 extern int gettimeofday(struct timeval * tv, struct timezone * tz);
+
+}
 #endif
 
 #endif

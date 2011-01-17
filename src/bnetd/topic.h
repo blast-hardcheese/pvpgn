@@ -17,21 +17,13 @@
 #ifndef INCLUDED_TOPIC_TYPES
 #define INCLUDED_TOPIC_TYPES
 
-#ifdef TOPIC_INTERNAL_ACCESS
+namespace pvpgn
+{
 
-#ifdef JUST_NEED_TYPES
-# include <stdio.h>
-# include "common/list.h"
-#else
-# define JUST_NEED_TYPES
-# include <stdio.h>
-# include "common/list.h"
-# undef JUST_NEED_TYPES
-#endif
+namespace bnetd
+{
 
-#endif
-
-typedef struct topic
+typedef struct s_topic
 #ifdef TOPIC_INTERNAL_ACCESS
 {
   char *   channel_name;
@@ -40,6 +32,10 @@ typedef struct topic
 }
 #endif
 t_topic;
+
+}
+
+}
 
 #define DO_SAVE_TOPIC 1
 #define NO_SAVE_TOPIC 0
@@ -50,14 +46,20 @@ t_topic;
 #ifndef INCLUDED_TOPIC_PROTOS
 #define INCLUDED_TOPIC_PROTOS
 
-#define JUST_NEED_TYPES
-#include "common/list.h"
-#undef JUST_NEED_TYPES
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 int    topiclist_load(char const * topicfile);
 int    topiclist_unload(void);
 int    channel_set_topic(char const * channel_name, char const * topic_text, int do_save);
 char * channel_get_topic(char const * channel_name);
+
+}
+
+}
 
 #endif
 #endif

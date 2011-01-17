@@ -18,6 +18,8 @@
 #ifndef INCLUDED_STRNCASECMP_PROTOS
 #define INCLUDED_STRNCASECMP_PROTOS
 
+#include <cstring>
+
 #ifndef HAVE_STRNCASECMP
 
 #ifdef HAVE_STRNICMP
@@ -25,7 +27,12 @@
 # define HAVE_STRNCASECMP /* don't include our own function */
 #else
 
+namespace pvpgn
+{
+
 extern int strncasecmp(char const * str1, char const * str2, unsigned int cnt);
+
+}
 
 #endif
 

@@ -2,6 +2,7 @@
  * Copyright (C) 2000  Rob Crittenden (rcrit@greyoak.com)
  * Copyright (C) 2002 Gianluigi Tiesi (sherpya@netfarm.it)
  * Copyright (C) 2004 CreepLord (creeplord@pvpgn.org)
+ * Copyright (C) 2008 Pelish (pelish@gmail.com)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,15 +23,26 @@
 
 #include "common/tag.h"
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 #ifdef AUTOUPDATE_INTERNAL_ACCESS
 typedef struct
 {
     t_tag         archtag;
     t_tag         clienttag;
     char const *  versiontag;
-    char const *  mpqfile;
+    char const *  updatefile;  /* used for bnet *.mpq file or wol *.rtp file */
+    char const *  path;        /* Used only for WOL FTP update */
 } t_autoupdate;
 #endif
+
+}
+
+}
 
 #endif
 
@@ -40,9 +52,19 @@ typedef struct
 #ifndef INCLUDED_AUTOUPDATE_PROTOS
 #define INCLUDED_AUTOUPDATE_PROTOS
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 extern int autoupdate_load(char const * filename);
 extern int autoupdate_unload(void);
-extern char * autoupdate_check(t_tag archtag, t_tag clienttag, t_tag gamelang, char const * versiontag);
+extern char * autoupdate_check(t_tag archtag, t_tag clienttag, t_tag gamelang, char const * versiontag, char const * sku);
+
+}
+
+}
 
 #endif
 #endif

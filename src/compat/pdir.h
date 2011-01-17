@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001  Dizzy 
+ * Copyright (C) 2001,2006  Dizzy
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,80 +15,69 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-#ifndef INCLUDED_PDIR_TYPES
-#define INCLUDED_PDIR_TYPES
+#ifndef INCLUDED_PVPGN_PDIR
+#define INCLUDED_PVPGN_PDIR
 
-#ifdef PDIR_INTERNAL_ACCESS
+#include <string>
+#include <stdexcept>
 
-#ifdef JUST_NEED_TYPES
-# ifdef HAVE_DIRENT_H
-#  include <dirent.h>
-# else
-#  ifdef HAVE_SYS_NDIR_H
-#   include <sys/ndir.h>
-#  endif
-#  if HAVE_SYS_DIR_H
-#   include <sys/dir.h>
-#  endif
-#  if HAVE_NDIR_H
-#   include <ndir.h>
-#  endif
-#  define dirent direct
-# endif
-# ifdef WIN32
-#  include <io.h> /* for _findfirst(), _findnext(), etc */
-# endif
+#ifdef HAVE_DIRENT_H
+# include <dirent.h>
 #else
-# define JUST_NEED_TYPES
-# ifdef HAVE_DIRENT_H
-#  include <dirent.h>
-# else
-#  ifdef HAVE_SYS_NDIR_H
-#   include <sys/ndir.h>
-#  endif
-#  if HAVE_SYS_DIR_H
-#   include <sys/dir.h>
-#  endif
-#  if HAVE_NDIR_H
-#   include <ndir.h>
-#  endif
-#  define dirent direct
+# ifdef HAVE_SYS_NDIR_H
+#  include <sys/ndir.h>
 # endif
-# ifdef WIN32
-#  include <io.h> /* for _findfirst(), _findnext(), etc */
+# if HAVE_SYS_DIR_H
+#  include <sys/dir.h>
 # endif
-# undef JUST_NEED_TYPES
+# if HAVE_NDIR_H
+#  include <ndir.h>
+# endif
+# define dirent direct
 #endif
-
-#endif
-
-typedef struct pdir_struct
-#ifdef PDIR_INTERNAL_ACCESS
-{
-   char const *       path;
-   char const *       lastret;
 #ifdef WIN32
-   long               lFindHandle;
-   struct _finddata_t fileinfo;
-   int                status; /* -1 == failure, 0 == freshly opened, 1 == opened and read, 2 == eof */
+# include <io.h> /* for _findfirst(), _findnext(), etc */
+#endif
+
+namespace pvpgn
+{
+
+class Directory
+{
+public:
+	class OpenError: public std::runtime_error
+	{
+	public:
+		OpenError(const std::string& path)
+		:std::runtime_error("Error opening directory: " + path) {}
+		~OpenError() throw() {}
+	};
+
+	explicit Directory(const std::string& fname, bool lazyread = false);
+	~Directory() throw();
+	void rewind();
+	char const * read() const;
+	void open(const std::string& fname, bool lazyread = false);
+	operator bool() const;
+
+private:
+	std::string        path;
+	bool lazyread;
+#ifdef WIN32
+	long               lFindHandle;
+	mutable struct _finddata_t fileinfo;
+	mutable int        status; /* -1 == failure, 0 == freshly opened, 1 == opened and read, 2 == eof */
 #else /* POSIX */
-   DIR *              dir;
+	DIR *              dir;
 #endif
+
+	/* do not allow copying for the time being */
+	Directory(const Directory&);
+	Directory& operator=(const Directory&);
+	void close();
+};
+
 }
-#endif
-t_pdir;
 
 #endif
 
-#ifndef JUST_NEED_TYPES
-#ifndef INCLUDED_PDIR_PROTOS
-#define INCLUDED_PDIR_PROTOS
-
-extern t_pdir * p_opendir(const char * dirname);
-extern int p_rewinddir(t_pdir * pdir);
-extern char const * p_readdir(t_pdir * pdir);
-extern int p_closedir(t_pdir * pdir);
-
-#endif
-
-#endif

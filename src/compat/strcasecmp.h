@@ -18,6 +18,8 @@
 #ifndef INCLUDED_STRCASECMP_PROTOS
 #define INCLUDED_STRCASECMP_PROTOS
 
+#include <cstring>
+
 #ifndef HAVE_STRCASECMP
 
 #ifdef HAVE_STRICMP
@@ -25,7 +27,12 @@
 # define HAVE_STRCASECMP
 #else
 
+namespace pvpgn
+{
+
 extern int strcasecmp(char const * str1, char const * str2);
+
+}
 
 #endif
 

@@ -3,10 +3,13 @@
  * This file is a part of tinycdb package by Michael Tokarev, mjt@corpit.ru.
  * Public domain.
  */
-#include <stdio.h>
+#include <cstdio>
 
 #ifndef TINYCDB_VERSION
 #define TINYCDB_VERSION 0.74
+
+namespace pvpgn
+{
 
 typedef unsigned int cdbi_t; /* compatibility */
 
@@ -16,7 +19,7 @@ unsigned cdb_unpack(const unsigned char buf[4]);
 void cdb_pack(unsigned num, unsigned char buf[4]);
 
 struct cdb {
-  FILE *cdb_fd;			/* file descriptor */
+  std::FILE *cdb_fd;			/* file descriptor */
   /* private members */
   unsigned cdb_fsize;		/* datafile size */
   unsigned cdb_dend;		/* end of data ptr */
@@ -33,7 +36,7 @@ struct cdb {
 #define cdb_keylen(c) ((c)->cdb_klen)
 #define cdb_fileno(c) ((c)->cdb_fd)
 
-int cdb_init(struct cdb *cdbp, FILE *fd);
+int cdb_init(struct cdb *cdbp, std::FILE *fd);
 void cdb_free(struct cdb *cdbp);
 
 int cdb_read(const struct cdb *cdbp,
@@ -69,13 +72,13 @@ int cdb_seqnext(unsigned *cptr, struct cdb *cdbp);
 
 /* old simple interface */
 /* open file using standard routine, then: */
-int cdb_seek(FILE *fd, const void *key, unsigned klen, unsigned *dlenp);
-int cdb_bread(FILE *fd, void *buf, int len);
+int cdb_seek(std::FILE *fd, const void *key, unsigned klen, unsigned *dlenp);
+int cdb_bread(std::FILE *fd, void *buf, int len);
 
 /* cdb_make */
 
 struct cdb_make {
-  FILE *cdb_fd;			/* file descriptor */
+  std::FILE *cdb_fd;			/* file descriptor */
   /* private */
   unsigned cdb_dpos;		/* data position so far */
   unsigned cdb_rcnt;		/* record count so far */
@@ -84,7 +87,7 @@ struct cdb_make {
   struct cdb_rl *cdb_rec[256];	/* list of arrays of record infos */
 };
 
-int cdb_make_start(struct cdb_make *cdbmp, FILE *fd);
+int cdb_make_start(struct cdb_make *cdbmp, std::FILE *fd);
 int cdb_make_add(struct cdb_make *cdbmp,
 		 const void *key, unsigned klen,
 		 const void *val, unsigned vlen);
@@ -99,5 +102,7 @@ int cdb_make_put(struct cdb_make *cdbmp,
 #define CDB_PUT_INSERT	2	/* add only if not already exists */
 #define CDB_PUT_WARN	3	/* add unconditionally but ret. 1 if exists */
 int cdb_make_finish(struct cdb_make *cdbmp);
+
+}
 
 #endif /* include guard */

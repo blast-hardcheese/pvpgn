@@ -22,26 +22,13 @@
 # define MAX_PATH		1024
 #endif
 
-#ifndef WIN32
-typedef unsigned int		BOOL;
-#endif
-
-#define TRUE			1
-#define FALSE			0
 #define tf(a)			((a)?1:0)
 #define SELECT_TIME_OUT		20000
 #define kBufferSize		(1024*20)
 #define kMaxPacketLength	(1024*5)
-#define MAX_GAMEPASS_LEN	16
-#define MAX_GAMEDESC_LEN	32
 
-#define MAX_CHARNAME_LEN	16
-#define MAX_ACCTNAME_LEN	16
-#define MAX_GAMENAME_LEN	16
-#define MAX_REALMNAME_LEN	32
-
-#define DEFAULT_LOG_FILE		"/usr/local/var/d2dbs.log"
-#define DEFAULT_LOG_FILE_GS		"/usr/local/var/d2dbs-gs.log"
+#define DEFAULT_LOG_FILE		"/usr/local/var/d2dbs.std::log"
+#define DEFAULT_LOG_FILE_GS		"/usr/local/var/d2dbs-gs.std::log"
 #define DEFAULT_LOG_LEVELS		"info,warn,error"
 #define D2DBS_CHARSAVE_DIR		"/usr/local/var/charsave"
 #define D2DBS_CHARINFO_DIR		"/usr/local/var/charinfo"
@@ -51,7 +38,7 @@ typedef unsigned int		BOOL;
 #ifndef D2DBS_DEFAULT_CONF_FILE
 # define D2DBS_DEFAULT_CONF_FILE "conf/d2dbs.conf"
 #endif
-#define DEFAULT_MEMLOG_FILE		"/tmp/d2dbs-mem.log"
+#define DEFAULT_MEMLOG_FILE		"/tmp/d2dbs-mem.std::log"
 #define DEFAULT_LISTEN_PORT		6114
 #define D2DBS_SERVER_ADDRS		"0.0.0.0"
 #define D2GS_SERVER_LIST		"192.168.0.1"

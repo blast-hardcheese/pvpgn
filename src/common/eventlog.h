@@ -19,6 +19,9 @@
 #ifndef INCLUDED_EVENTLOG_TYPES
 #define INCLUDED_EVENTLOG_TYPES
 
+namespace pvpgn
+{
+
 typedef enum
 {
     eventlog_level_none = 0,
@@ -28,7 +31,12 @@ typedef enum
     eventlog_level_warn = 8,
     eventlog_level_error=16,
     eventlog_level_fatal=32
+#ifdef WIN32_GUI
+   ,eventlog_level_gui  =64
+#endif
 } t_eventlog_level;
+
+}
 
 #endif
 
@@ -38,13 +46,14 @@ typedef enum
 #ifndef INCLUDED_EVENTLOG_PROTOS
 #define INCLUDED_EVENTLOG_PROTOS
 
-#define JUST_NEED_TYPES
-#include <stdio.h>
-#undef JUST_NEED_TYPES
+#include <cstdio>
+
+namespace pvpgn
+{
 
 extern void eventlog_set_debugmode(int debugmode);
-extern void eventlog_set(FILE * fp);
-extern FILE * eventlog_get(void);
+extern void eventlog_set(std::FILE * fp);
+extern std::FILE * eventlog_get(void);
 extern int eventlog_open(char const * filename);
 extern int eventlog_close(void);
 extern void eventlog_clear_level(void);
@@ -52,8 +61,8 @@ extern int eventlog_add_level(char const * levelname);
 extern int eventlog_del_level(char const * levelname);
 extern char const * eventlog_get_levelname_str(t_eventlog_level level);
 extern void eventlog_hexdump_data(void const * data, unsigned int len);
-extern void eventlog(t_eventlog_level level, char const * module, char const * fmt, ...);
-extern void eventlog_step(char const * filename, t_eventlog_level level, char const * module, char const * fmt, ...);
+extern void eventlog(t_eventlog_level level, char const * module, char const * fmt, ...) PRINTF_ATTR(3,4);
+extern void eventlog_step(char const * filename, t_eventlog_level level, char const * module, char const * fmt, ...) PRINTF_ATTR(4,5);
 
 #define FATAL0(fmt) eventlog(eventlog_level_fatal,__FUNCTION__,fmt)
 #define FATAL1(fmt,arg1) eventlog(eventlog_level_fatal,__FUNCTION__,fmt,arg1)
@@ -85,6 +94,7 @@ extern void eventlog_step(char const * filename, t_eventlog_level level, char co
 #define TRACE2(fmt,arg1,arg2) eventlog(eventlog_level_trace,__FUNCTION__,fmt,arg1,arg2)
 #define TRACE3(fmt,arg1,arg2,arg3) eventlog(eventlog_level_trace,__FUNCTION__,fmt,arg1,arg2,arg3)
 
+}
 
 #endif
 #endif

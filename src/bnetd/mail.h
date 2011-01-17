@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001            Dizzy 
+ * Copyright (C) 2001,2006       Dizzy
  * Copyright (C) 2004            Donny Redmond (dredmond@linuxmail.org)
  *
  * This program is free software; you can redistribute it and/or
@@ -19,8 +19,8 @@
 
 
 /*****/
-#ifndef INCLUDED_MAIL_TYPES
-#define INCLUDED_MAIL_TYPES
+#ifndef INCLUDED_PVPGN_BNETD_MAIL
+#define INCLUDED_PVPGN_BNETD_MAIL
 
 
 #define MAX_FUNC_LEN 10
@@ -32,80 +32,84 @@
 #define MAIL_FUNC_UNKNOWN 5
 
 
-#ifdef MAIL_INTERNAL_ACCESS
+#include <string>
+#include <stdexcept>
+#include <deque>
+#include <ctime>
 
-#ifdef JUST_NEED_TYPES
-# ifdef TIME_WITH_SYS_TIME
-#  include <sys/time.h>
-#  include <time.h>
-# else
-#  ifdef HAVE_SYS_TIME_H
-#   include <sys/time.h>
-#  else
-#   include <time.h>
-#  endif
-# endif
-# ifdef HAVE_SYS_TYPES_H
-#  include <sys/types.h>
-# endif
-# include "compat/pdir.h"
-#else
-# define JUST_NEED_TYPES
-# ifdef TIME_WITH_SYS_TIME
-#  include <sys/time.h>
-#  include <time.h>
-# else
-#  ifdef HAVE_SYS_TIME_H
-#   include <sys/time.h>
-#  else
-#   include <time.h>
-#  endif
-# endif
-# ifdef HAVE_SYS_TYPES_H
-#  include <sys/types.h>
-# endif
-# include "compat/pdir.h"
-# undef JUST_NEED_TYPES
-#endif
-
-typedef enum {
-    mbox_mode_read = 0x01,
-    mbox_mode_write = 0x02
-} t_mbox_mode;
-
-typedef struct mailbox_struct {
-   t_pdir *     maildir;
-   unsigned int uid;
-   char *       path;
-} t_mailbox;
-
-typedef struct mail_struct {
-   char * sender;
-   char * message;
-   time_t timestamp;
-} t_mail;
-
-typedef struct maillist_struct {
-   int    idx;
-   char * sender;
-   time_t timestamp;
-   struct maillist_struct * next;
-} t_maillist;
-
-#endif
-
-#endif
-
-#ifndef JUST_NEED_TYPES
-#ifndef INCLUDED_MAIL_PROTOS
-#define INCLUDED_MAIL_PROTOS
-
-#define JUST_NEED_TYPES
+#include "compat/pdir.h"
 #include "connection.h"
-#undef JUST_NEED_TYPES
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
+class Mail
+{
+public:
+	Mail(const std::string& sender, const std::string& mess, const std::time_t timestamp);
+	~Mail() throw();
+
+	const std::string& sender() const;
+	const std::string& message() const;
+	const std::time_t& timestamp() const;
+
+private:
+	const std::string sender_;
+	const std::string message_;
+	const std::time_t timestamp_;
+};
+
+typedef std::deque<Mail> MailList;
+
+class Mailbox {
+public:
+	class ReadError: public std::runtime_error {
+	public:
+		ReadError(const std::string& mess)
+		:std::runtime_error(mess) {}
+		~ReadError() throw() {}
+	};
+
+	class DeliverError: public std::runtime_error {
+	public:
+		DeliverError(const std::string& mess)
+		:std::runtime_error(mess) {}
+		~DeliverError() throw() {}
+	};
+
+	explicit Mailbox(unsigned uid);
+	~Mailbox() throw();
+
+	unsigned size() const;
+	bool empty() const;
+	void deliver(const std::string& sender, const std::string& mess);
+	Mail read(unsigned int) const;
+	void readAll(MailList& dest) const;
+	void erase(unsigned int);
+	void clear();
+
+private:
+	unsigned uid;
+	const std::string path;
+	mutable Directory mdir;
+
+	std::string buildPath(const std::string& root) const;
+	void createOpenDir();
+	Mail read(const std::string& fname, const std::time_t& timestamp) const;
+
+	Mailbox(const Mailbox&);
+	Mailbox& operator=(const Mailbox&);
+};
+
 
 extern int handle_mail_command(t_connection *, char const *);
-extern char const * check_mail(t_connection const * c);
+extern unsigned check_mail(t_connection const * c);
 
-#endif
+}
+
+}
+
 #endif

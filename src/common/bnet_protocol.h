@@ -34,6 +34,9 @@
  */
 
 
+namespace pvpgn
+{
+
 /******************************************************/
 typedef struct
 {
@@ -120,7 +123,7 @@ typedef struct
 
 /******************************************************/
 /*
-f7 21 08 00 01 00 00 00 
+f7 21 08 00 01 00 00 00
 */
 
 #define CLIENT_W3ROUTE_ABORT 0x21f7
@@ -130,7 +133,7 @@ typedef struct
         t_w3route_header h;
         bn_int unknown1;       /* count? */
 } PACKED_ATTR() t_client_w3route_abort;
-		
+
 /******************************************************/
 /*
 f7 08 05 00 02
@@ -158,7 +161,7 @@ typedef struct
 
 /******************************************************/
 /*
-f7 01 08 00 2e 85 2d 7b 
+f7 01 08 00 2e 85 2d 7b
 */
 #define SERVER_W3ROUTE_ECHOREQ 0x01f7
 typedef struct
@@ -185,25 +188,25 @@ typedef struct
 */
 #define CLIENT_W3ROUTE_GAMERESULT 0x2ef7
 /*
-                           F7 3A-84 00 02 01 04 00 00 00  
-0x0040   20 00 00 00 83 09 00 00-00 00 00 00 02 03 00 00  
-0x0050   00 20 00 00 00 2C 01 00-00 00 00 00 00 5C 04 00 
-0x0060   00 00 03 00 00 00 00 00-00 00 01 00 00 00 CC 0B  
-0x0070   00 00 00 00 00 00 72 0B-00 00 0E 00 00 00 00 00   
-0x0080   00 00 04 00 00 00 01 00-00 00 15 00 00 00 00 00   
-0x0090   00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  
-0x00A0   00 00 46 0A 00 00 2C 01-00 00 00 00 00 00 00 00   
-0x00B0   00 00 00 00 00 00 00 00-00 00                     
+                           F7 3A-84 00 02 01 04 00 00 00
+0x0040   20 00 00 00 83 09 00 00-00 00 00 00 02 03 00 00
+0x0050   00 20 00 00 00 2C 01 00-00 00 00 00 00 5C 04 00
+0x0060   00 00 03 00 00 00 00 00-00 00 01 00 00 00 CC 0B
+0x0070   00 00 00 00 00 00 72 0B-00 00 0E 00 00 00 00 00
+0x0080   00 00 04 00 00 00 01 00-00 00 15 00 00 00 00 00
+0x0090   00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00
+0x00A0   00 00 46 0A 00 00 2C 01-00 00 00 00 00 00 00 00
+0x00B0   00 00 00 00 00 00 00 00-00 00
 
-                           F7 3A-84 00 02 02 03 00 00 00 
-0x0040   20 00 00 00 2C 01 00 00-00 00 00 00 01 04 00 00 
-0x0050   00 20 00 00 00 83 09 00-00 00 00 00 00 5C 04 00  
-0x0060   00 00 01 00 00 00 01 00-00 00 00 00 00 00 39 03  
-0x0070   00 00 00 00 00 00 00 00-00 00 05 00 00 00 00 00  
-0x0080   00 00 01 00 00 00 00 00-00 00 05 00 00 00 00 00  
-0x0090   00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00 
-0x00A0   00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  
-0x00B0   00 00 00 00 00 00 00 00-00 00                  
+                           F7 3A-84 00 02 02 03 00 00 00
+0x0040   20 00 00 00 2C 01 00 00-00 00 00 00 01 04 00 00
+0x0050   00 20 00 00 00 83 09 00-00 00 00 00 00 5C 04 00
+0x0060   00 00 01 00 00 00 01 00-00 00 00 00 00 00 39 03
+0x0070   00 00 00 00 00 00 00 00-00 00 05 00 00 00 00 00
+0x0080   00 00 01 00 00 00 00 00-00 00 05 00 00 00 00 00
+0x0090   00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00
+0x00A0   00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00
+0x00B0   00 00 00 00 00 00 00 00-00 00
 */
 
 #define CLIENT_W3ROUTE_GAMERESULT_W3XP 0x3af7
@@ -302,7 +305,7 @@ typedef struct
 0040  ** ** ** ** ** ** ** 00 08 2d 09 9d 04 08 00 00   layer00..-......
 0050  00 02 00 17 e0 [censored]  00 00 00 00 00 00 00   .......g........
 0060  00 02 00 17 e0 [censored]  00 00 00 00 00 00 00   .......g........
-0070  00 
+0070  00
 
 */
 #define SERVER_W3ROUTE_PLAYERINFO 0x06f7
@@ -336,7 +339,7 @@ typedef struct
 
 typedef struct
 {
-	bn_byte plnum;	
+	bn_byte plnum;
 	bn_byte unknown1;		/* 3 (length?) */
 	bn_byte level;
 	bn_short unknown2;
@@ -367,7 +370,7 @@ typedef struct
 
 /*******************************************************/
 /*
-    ALL ANONGAME PACKET INFO (0x44ff) MOVED TO anongame_protocol.h 
+    ALL ANONGAME PACKET INFO (0x44ff) MOVED TO anongame_protocol.h
     [Omega]
 */
 /******************************************************/
@@ -389,7 +392,7 @@ B4 E0 3B 6C                                          ..;l
             FF 28 08 00   F6 0F 08 00                    .(......
 
 Diablo II 1.03 ... note it sends NO host and user strings
-      FF 05 14 00 01 00   00 00 D1 43 88 AA DA 9D      ...... ...C.... 
+      FF 05 14 00 01 00   00 00 D1 43 88 AA DA 9D      ...... ...C....
 1B 00 9A F7 69 AB                                    ....i.
 */
 #define CLIENT_COMPINFO1 0x05ff
@@ -419,11 +422,11 @@ CLIENT_COMPINFO2 was first seen in Starcraft 1.05
 43 4C 4F 55 44 00 63 6C   6F 75 64 00                CLOUD.cloud.
 
 FF 1E 28 00 01 00 00 00   01 00 00 00 D1 43 88 AA    ..(..........C..
-DA 9D 1B 00 9A F7 69 AB   42 4F 42 20 20 20 20 20    ......i.BOB     
+DA 9D 1B 00 9A F7 69 AB   42 4F 42 20 20 20 20 20    ......i.BOB
 20 20 20 00 42 6F 62 00                                 .Bob.
 
 Diablo II 1.03 ... note it sends empty host and user strings
-      FF 1E 1A 00 01 00   00 00 01 00 00 00 D1 43      ............C 
+      FF 1E 1A 00 01 00   00 00 01 00 00 00 D1 43      ............C
 88 AA DA 9D 1B 00 9A F7   69 AB 00 00                .......i...
 */
 #define CLIENT_COMPINFO2 0x1eff
@@ -553,9 +556,9 @@ FF 12 36 00 20 F3 31 08   40 A7 BF 01 20 C3 BA CB    ..6. .1.@... ...
 77 65 64 65 6E 00                                    weden.
 
 Diablo II 1.03
-      FF 12 39 00 A0 DB   AA 45 51 3F C0 01 A0 EB      ..9....EQ?.... 
-56 17 A5 3F C0 01 A8 FD   FF FF 09 0C 00 00 09 0C    V..?............ 
-00 00 09 0C 00 00 65 6E   61 00 36 31 00 41 55 53    ......ena.61.AUS 
+      FF 12 39 00 A0 DB   AA 45 51 3F C0 01 A0 EB      ..9....EQ?....
+56 17 A5 3F C0 01 A8 FD   FF FF 09 0C 00 00 09 0C    V..?............
+00 00 09 0C 00 00 65 6E   61 00 36 31 00 41 55 53    ......ena.61.AUS
 00 41 75 73 74 72 61 6C   69 61 00                   .Australia.
 */
 #define CLIENT_COUNTRYINFO1 0x12ff
@@ -691,7 +694,7 @@ FF 06 14 00 36 38 58 49   52 41 54 53 BD 00 00 00    ....68XIRATS....
 00 00 00 00                                          ....
 
 Diablo II 1.03
-      FF 06 14 00 36 38   58 49 56 44 32 44 03 00      ....68XIVD2D.. 
+      FF 06 14 00 36 38   58 49 56 44 32 44 03 00      ....68XIVD2D..
 00 00 00 00 00 00                                    ......
 */
 #define CLIENT_PROGIDENT 0x06ff
@@ -728,7 +731,7 @@ FF 06 59 00 00 C1 12 EC   09 28 BC 01 49 58 38 36    ..Y......(..IX86
 FF 06 5A 00 00 C1 12 EC   09 28 BC 01 49 58 38 36    ..Z......(..IX86
 76 65 72 35 2E 6D 70 71   00 41 3D 31 37 31 32 39    ver5.mpq.A=17129
 34 38 34 32 36 20 42 3D   33 36 30 30 30 33 30 36    48426 B=36000306
-30 37 20 43 3D 33 33 39   30 34 31 37 39 35 39 20    07 C=3390417959 
+30 37 20 43 3D 33 33 39   30 34 31 37 39 35 39 20    07 C=3390417959
 34 20 41 3D 41 2D 53 20   42 3D 42 5E 43 20 43 3D    4 A=A-S B=B^C C=
 43 2D 41 20 41 3D 41 2D   42 00                      C-A A=A-B.
 
@@ -774,7 +777,7 @@ FF 50 65 00 00 00 00 00   36 1A 6C 45 76 BC 00 00    .Pe.....6.lEv...
 34 33 32 36 36 32 34 37   38 20 42 3D 36 35 32 32    432662478 B=6522
 37 38 36 32 35 20 43 3D   31 37 36 31 35 31 35 38    78625 C=17615158
 36 39 20 34 20 41 3D 41   5E 53 20 42 3D 42 2B 43    69 4 A=A^S B=B+C
-20 43 3D 43 2B 41 20 41   3D 41 5E 42 00              C=C+A A=A^B.   
+20 43 3D 43 2B 41 20 41   3D 41 5E 42 00              C=C+A A=A^B.
 */
 #define SERVER_AUTHREQ_109 0x50ff
 typedef struct
@@ -826,7 +829,7 @@ FF 07 45 00 36 38 58 49   4E 42 32 57 4B 00 00 00    ..E.68XINB2WK...
 99 00 00 02 3D 51 C4 AA   57 61 72 63 72 61 66 74    ....=Q..Warcraft
 20 49 49 20 42 4E 45 2E   65 78 65 20 31 30 2F 31     II BNE.exe 10/1
 35 2F 39 39 20 30 30 3A   33 37 3A 35 34 20 37 30    5/99 00:37:54 70
-34 35 31 32 00                                       4512.           
+34 35 31 32 00                                       4512.
 
 sent by the 1.03 Diablo II
                           FF 07 3A 00 36 38 58 49            ..:.68XI
@@ -874,7 +877,7 @@ typedef struct
 /******************************************************/
 /*
   First seen in Diablo II (and LoD) 1.09
-FF 51 09 00 00 00 00 00   00                         .Q.......       
+FF 51 09 00 00 00 00 00   00                         .Q.......
 */
 #define SERVER_AUTHREPLY_109 0x51ff
 typedef struct
@@ -899,7 +902,7 @@ A5 E7 39 00 00 00 00 00   ED CD 4F F7 6A 7A 4F 96    ..9.......O.jzO.
 85 7A 2D A2 7F 1F B1 D6   81 B3 8D 50 47 61 6D 65    .z-........PGame
 2E 65 78 65 20 30 38 2F   31 36 2F 30 31 20 32 33    .exe 08/16/01 23
 3A 30 34 3A 34 30 20 34   32 34 30 36 37 00 74 73    :04:40 424067.ts
-69 6E 67 68 75 61 00                                 inghua.         
+69 6E 67 68 75 61 00                                 inghua.
 */
 #define CLIENT_AUTHREQ_109 0x51ff
 typedef struct
@@ -1172,7 +1175,7 @@ typedef struct
 /******************************************************/
 /*
                           FF 42 09 00 00 00 00 00            .B......
-00                                                                   
+00
 
 FF 42 09 00 00 00 00 00   00                         .B.......
 */
@@ -1203,7 +1206,7 @@ typedef struct
 
 /******************************************************/
 /*
-0000:   FF 40 04 00                                          .@..            
+0000:   FF 40 04 00                                          .@..
 
 */
 #define CLIENT_REALMLISTREQ_110 0x40ff
@@ -1238,10 +1241,10 @@ ff ff ff ff 00 00 00 00   42 65 74 61 57 65 73 74    ........BetaWest
 6d 20 64 75 72 69 6e 67   20 62 65 74 61 00          m during beta.
 
 from bnetd-0.3.23pre18 to Diablo II 1.03
-      FF 34 4B 00 00 00   00 00 01 00 00 00 00 00      .4K........... 
-00 C0 00 00 00 00 00 00   00 00 00 00 00 00 10 82    ................ 
-01 00 FF FF FF FF 00 00   00 00 51 61 72 61 74 68    ..........Qarath 
-52 65 61 6C 6D 00 54 48   45 20 43 68 6F 69 63 65    Realm.THE Choice 
+      FF 34 4B 00 00 00   00 00 01 00 00 00 00 00      .4K...........
+00 C0 00 00 00 00 00 00   00 00 00 00 00 00 10 82    ................
+01 00 FF FF FF FF 00 00   00 00 51 61 72 61 74 68    ..........Qarath
+52 65 61 6C 6D 00 54 48   45 20 43 68 6F 69 63 65    Realm.THE Choice
 20 46 6F 72 20 4E 6F 77   28 74 6D 29 00              For Now(tm).
 */
 #define SERVER_REALMLISTREPLY 0x34ff /* realm list reply? */
@@ -1282,7 +1285,7 @@ typedef struct
 # 44 packet from server: type=0x40ff(unknown) length=40 class=bnet
 0000:   FF 40 28 00 00 00 00 00   01 00 00 00 01 00 00 00    .@(.............
 0010:   45 75 72 6F 70 65 00 52   65 61 6C 6D 20 66 6F 72    Europe.Realm for
-0020:   20 45 75 72 6F 70 65 00                               Europe.        
+0020:   20 45 75 72 6F 70 65 00                               Europe.
 */
 #define SERVER_REALMLISTREPLY_110 0x40ff
 
@@ -1383,19 +1386,19 @@ from bnetd-0.3.23pre18 to Diablo II 1.03
 "Char1 {BNE}" [lvl 20, amaz]
 "Char2 {BNE}" [lvl 21, sorc]
 "Char3 {BNE}" [lvl 22, necro]
-      FF 37 D9 00 00 00   00 00 08 00 00 00 03 00    Gv.7............ 
-00 00 51 61 72 61 74 68   52 65 61 6C 6D 2C 43 68    ..QarathRealm,Ch 
-61 72 31 00 87 80 01 01   01 01 01 01 01 01 01 01    ar1............. 
-01 01 01 01 01 01 01 01   01 01 01 01 01 01 01 01    ................ 
-01 01 01 01 01 01 01 14   85 86 01 FF FF FF FF 42    ...............B 
-4E 45 54 44 00 51 61 72   61 74 68 52 65 61 6C 6d    NETD.QarathRealm 
-2C 43 68 61 72 32 00 87   80 01 01 01 01 01 01 01    ,Char2.......... 
-01 01 01 01 01 01 01 01   01 02 01 01 01 01 01 01    ................ 
-01 01 01 01 01 01 01 01   01 01 15 85 86 01 FF FF    ................ 
-FF FF 42 4E 45 54 44 00   51 61 72 61 74 68 52 65    ..BNETD.QarathRe 
-61 6C 6D 2C 43 68 61 72   33 00 87 80 01 01 01 01    alm,Char3....... 
-01 01 01 01 01 01 01 01   01 01 01 01 03 01 01 01    ................ 
-01 01 01 01 01 01 01 01   01 01 01 01 01 16 85 86    ................ 
+      FF 37 D9 00 00 00   00 00 08 00 00 00 03 00    Gv.7............
+00 00 51 61 72 61 74 68   52 65 61 6C 6D 2C 43 68    ..QarathRealm,Ch
+61 72 31 00 87 80 01 01   01 01 01 01 01 01 01 01    ar1.............
+01 01 01 01 01 01 01 01   01 01 01 01 01 01 01 01    ................
+01 01 01 01 01 01 01 14   85 86 01 FF FF FF FF 42    ...............B
+4E 45 54 44 00 51 61 72   61 74 68 52 65 61 6C 6d    NETD.QarathRealm
+2C 43 68 61 72 32 00 87   80 01 01 01 01 01 01 01    ,Char2..........
+01 01 01 01 01 01 01 01   01 02 01 01 01 01 01 01    ................
+01 01 01 01 01 01 01 01   01 01 15 85 86 01 FF FF    ................
+FF FF 42 4E 45 54 44 00   51 61 72 61 74 68 52 65    ..BNETD.QarathRe
+61 6C 6D 2C 43 68 61 72   33 00 87 80 01 01 01 01    alm,Char3.......
+01 01 01 01 01 01 01 01   01 01 01 01 03 01 01 01    ................
+01 01 01 01 01 01 01 01   01 01 01 01 01 16 85 86    ................
 01 FF FF FF FF 42 4E 45   54 44 00                   .....BNETD.
 */
 #define SERVER_UNKNOWN_37 0x37ff
@@ -1432,7 +1435,7 @@ typedef struct
     bn_byte lhandweapon;
     bn_byte lhandgfx;
     bn_byte rhandweapon;
-    
+
 /* Partial weapon code list:
           0x2f: 1H Axe
           0x30: 1H Sword
@@ -1453,7 +1456,7 @@ typedef struct
           0x5e: empty?
           0x5f: empty?
 */
-    
+
     bn_byte rhandgfx;
     bn_byte unknownb3;
     bn_byte unknownb4;
@@ -1464,13 +1467,13 @@ typedef struct
     bn_byte unknownb9;
     bn_byte unknownb10;
     bn_byte unknownb11;
-    bn_byte class;     /* 0x01=Amazon, 0x02=Sor, 0x03=Nec, 0x04=Pal, 0x05=Bar */
-    
+    bn_byte chclass;     /* 0x01=Amazon, 0x02=Sor, 0x03=Nec, 0x04=Pal, 0x05=Bar */
+
     bn_int  unknown1;
     bn_int  unknown2;
     bn_int  unknown3;
     bn_int  unknown4;
-    
+
     bn_byte level;     /* yes, byte, not short/int/long  */
     bn_byte status;    /* 0x01-03 = Norm & alive         */
                        /* 0x04-07 = HC & alive           */
@@ -1490,11 +1493,11 @@ typedef struct
     bn_byte emblembgc; /* Guild emblem background colour */
     bn_byte emblemfgc; /* Guild emblem foreground colour */
     bn_byte emblemnum; /* Guild emblem type number       */
-    
+
 /* emblem number corresponds to D2DATA.MPQ/data/global/ui/Emblems/iconXXa.dc6 */
 /* where XX = emblem number - 1 (ie, 0x0A corresponds to icon09a.dc6) use     */
 /* for dummy values seem safe... 0x01 won't work, you'll get an emblem...     */
-    
+
     bn_byte unknownb14;
     /* Guild Tag */ /* must not be longer than 3 chars */
 } PACKED_ATTR() t_d2char_info;
@@ -1558,7 +1561,7 @@ typedef struct
 /******************************************************/
 /*
 # 21 packet from client: type=0x46ff(unknown) length=8 class=bnet
-0000:   FF 46 08 00 00 00 00 00                              .F......          
+0000:   FF 46 08 00 00 00 00 00                              .F......
 */
 #define CLIENT_MOTD_W3 0x46ff
 typedef struct
@@ -1573,20 +1576,20 @@ typedef struct
 /*
 # 22 packet from server: type=0x46ff(unknown) length=225 class=bnet
 0000:   FF 46 E1 00 01 16 3A 6C   3C FF FF FF FF 00 00 00    .F....:l<.......
-0010:   00 00 00 00 00 57 65 6C   63 6F 6D 65 20 74 6F 20    .....Welcome to 
+0010:   00 00 00 00 00 57 65 6C   63 6F 6D 65 20 74 6F 20    .....Welcome to
 0020:   42 61 74 74 6C 65 2E 6E   65 74 21 0A 54 68 69 73    Battle.net!.This
 0030:   20 73 65 72 76 65 72 20   69 73 20 68 6F 73 74 65     server is hoste
 0040:   64 20 62 79 20 41 54 26   54 2E 0A 54 68 65 72 65    d by AT&T..There
 0050:   20 61 72 65 20 63 75 72   72 65 6E 74 6C 79 20 36     are currently 6
 0060:   32 38 20 75 73 65 72 73   20 70 6C 61 79 69 6E 67    28 users playing
 0070:   20 31 35 39 20 67 61 6D   65 73 20 6F 66 20 57 61     159 games of Wa
-0080:   72 63 72 61 66 74 20 49   49 49 2C 20 61 6E 64 20    rcraft III, and 
+0080:   72 63 72 61 66 74 20 49   49 49 2C 20 61 6E 64 20    rcraft III, and
 0090:   31 37 37 33 34 36 20 75   73 65 72 73 20 70 6C 61    177346 users pla
 00A0:   79 69 6E 67 20 37 37 38   33 37 20 67 61 6D 65 73    ying 77837 games
 00B0:   20 6F 6E 20 42 61 74 74   6C 65 2E 6E 65 74 2E 0A     on Battle.net..
-00C0:   4C 61 73 74 20 6C 6F 67   6F 6E 3A 20 54 68 75 20    Last logon: Thu 
+00C0:   4C 61 73 74 20 6C 6F 67   6F 6E 3A 20 54 68 75 20    Last logon: Thu
 00D0:   46 65 62 20 31 34 20 20   35 3A 32 38 20 50 4D 0A    Feb 14  5:28 PM.
-00E0:   00                                                   .               
+00E0:   00                                                   .
 
 # Match 4, 2002
 # 92 packet from server: type=0x46ff(unknown) length=859 class=bnet
@@ -1594,7 +1597,7 @@ typedef struct
 0010:   3C 20 B6 83 3C 57 65 20   68 61 76 65 20 62 65 65    < ..<We have bee
 # 93 packet from server: type=0x46ff(unknown) length=223 class=bnet
 0000:   FF 46 DF 00 01 B4 B2 82   3C 20 B6 83 3C 20 B6 83    .F......< ..< ..
-0010:   3C 00 00 00 00 57 65 6C   63 6F 6D 65 20 74 6F 20    <....Welcome to 
+0010:   3C 00 00 00 00 57 65 6C   63 6F 6D 65 20 74 6F 20    <....Welcome to
 
 */
 #define SERVER_MOTD_W3 0x46ff
@@ -1621,13 +1624,13 @@ typedef struct
 # 28 packet from client: type=0x53ff(unknown) length=40 class=bnet
 0000:   FF 53 28 00 6F FD 5F 61   C3 D1 C4 78 E6 2E 24 8B    .S(.o._a...x..$.
 0010:   32 EB 36 9C 39 57 D8 BA   57 84 67 5E E7 78 5B 01    2.6.9W..W.g^.x[.
-0020:   6D 99 87 15 4A 6F 6E 00                              m...Jon.        
+0020:   6D 99 87 15 4A 6F 6E 00                              m...Jon.
 */
 #define CLIENT_LOGINREQ_W3 0x53ff
 typedef struct
 {
     t_bnet_header h;
-    bn_byte        unknown[32];
+    bn_byte        client_public_key[32];
     /* player name */
 } PACKED_ATTR() t_client_loginreq_w3;
 /******************************************************/
@@ -1635,8 +1638,8 @@ typedef struct
 /******************************************************/
 /*
 12:33:56.255569 63.241.83.11.6112 > ws-2-11.1038: P 190:262(72) ack 272 win 65264
-    ** ** ** ** ** ** ** **   ** ** ** ** ** ** ** **                    
-    ** ** ** ** ** ** ** **   ** ** ** ** ** ** ** **                    
+    ** ** ** ** ** ** ** **   ** ** ** ** ** ** ** **
+    ** ** ** ** ** ** ** **   ** ** ** ** ** ** ** **
     ** ** ** ** ** ** ** **   FF 53 48 00 00 00 00 00            .SH.....
     4B A8 FF 5D 1E 5D 2D 50   D1 2B B2 95 74 AD 5F 4E    K..].]-P.+..t._N
     88 A4 88 48 18 27 89 50   F1 AA 1B D5 D7 B6 47 BC    ...H.'.P......G.
@@ -1649,7 +1652,8 @@ typedef struct
     t_bnet_header h;
     bn_int       message;
     /* seems to be response to client-challenge */
-    bn_int       unknown[16];
+    bn_byte       salt[32];
+    bn_byte       server_public_key[32];
 } PACKED_ATTR() t_server_loginreply_w3;
 #define SERVER_LOGINREPLY_W3_MESSAGE_SUCCESS 0x00000000
 #define SERVER_LOGINREPLY_W3_MESSAGE_ALREADY 0x00000001 /* Account already logged on */
@@ -1661,7 +1665,7 @@ typedef struct
 # 34 packet from server: type=0x54ff(unknown) length=40 class=bnet
 0000:   FF 54 28 00 00 00 00 00   00 00 00 00 00 00 00 00    .T(.............
 0010:   00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00    ................
-0020:   00 00 00 00 00 00 00 00                              ........        
+0020:   00 00 00 00 00 00 00 00                              ........
 
 * Password Checksum ? *
 -- client --
@@ -1679,53 +1683,87 @@ msgid - 4 bytes
 unknown1 - 20 bytes
 
 Packet #13
-0x0000   FF 54 1C 00 00 00 00 00-3A D5 B9 B1 2B D9 B5 D9   ÿT......:Õ¹?Ùµ?
-0x0010   87 3B 2B 3D 28 57 C0 2E-02 93 5F 8B               ?+=(W?.“_?
+0x0000   FF 54 1C 00 00 00 00 00-3A D5 B9 B1 2B D9 B5 D9   T......:Õ¹?Ùµ?
+0x0010   87 3B 2B 3D 28 57 C0 2E-02 93 5F 8B               ?+=(W?._?
 */
 #define CLIENT_LOGONPROOFREQ 0x54ff
 typedef struct
 {
     t_bnet_header h;
-    bn_int        password_hash1[5];
+    bn_byte	client_password_proof[20];
 } PACKED_ATTR() t_client_logonproofreq;
 
 #define SERVER_LOGONPROOFREPLY 0x54ff
 typedef struct
 {
    t_bnet_header h;
-   bn_int response;
-   bn_int unknown1;
-   bn_short port0;
-   bn_int unknown2;
-   bn_short port1;
-   bn_int unknown3;
-   bn_int unknown4;
+   bn_int	response;
+   bn_byte	server_password_proof[20];
 } PACKED_ATTR() t_server_logonproofreply;
-#define SERVER_LOGONPROOFREPLY_RESPONSE_OK 0x00000000
-/*#define SERVER_LOGONPROOFREPLY_RESPONSE_BADPASS 0x00000001 */
-#define SERVER_LOGONPROOFREPLY_RESPONSE_BADPASS 0x00000002 /* from the battle net dump... */
-#define SERVER_LOGONPROOFREPLY_RESPONSE_EMAIL  0x0000000E
-#define SERVER_LOGONPROOFREPLY_UNKNOWN1  0x02825278
-#define SERVER_LOGONPROOFREPLY_UNKNOWN2  0x00000000
-#define SERVER_LOGONPROOFREPLY_UNKNOWN3  0x02825278
-#define SERVER_LOGONPROOFREPLY_UNKNOWN4  0x00000000
+#define SERVER_LOGONPROOFREPLY_RESPONSE_OK      0x00000000
+#define SERVER_LOGONPROOFREPLY_RESPONSE_BADPASS 0x00000002
+#define SERVER_LOGONPROOFREPLY_RESPONSE_EMAIL   0x0000000E
+#define SERVER_LOGONPROOFREPLY_RESPONSE_CUSTOM  0x0000000F
 /******************************************************/
 
 /******************************************************/
-/* 
+#define CLIENT_PASSCHANGEREQ 0x55ff
+typedef struct
+{
+   t_bnet_header h;
+   bn_byte client_public_key[32];
+   /* username */
+} PACKED_ATTR() t_client_passchangereq;
+
+#define SERVER_PASSCHANGEREPLY 0x55ff
+typedef struct
+{
+   t_bnet_header h;
+   bn_int        message;
+   bn_byte       salt[32];
+   bn_byte       server_public_key[32];
+} PACKED_ATTR() t_server_passchangereply;
+#define SERVER_PASSCHANGEREPLY_MESSAGE_ACCEPT 0x00000000
+#define SERVER_PASSCHANGEREPLY_MESSAGE_REJECT 0x00000001 /* No such account */
+/******************************************************/
+
+/******************************************************/
+#define CLIENT_PASSCHANGEPROOFREQ 0x56ff
+typedef struct
+{
+   t_bnet_header h;
+   bn_byte       client_password_proof[20];
+   bn_byte       salt[32];
+   bn_byte       password_verifier[32];
+} PACKED_ATTR() t_client_passchangeproofreq;
+
+#define SERVER_PASSCHANGEPROOFREPLY 0x56ff
+typedef struct
+{
+   t_bnet_header h;
+   bn_int	response;
+   bn_byte       server_password_proof[20];
+} PACKED_ATTR() t_server_passchangeproofreply;
+#define SERVER_PASSCHANGEPROOFREPLY_RESPONSE_OK      0x00000000
+#define SERVER_PASSCHANGEPROOFREPLY_RESPONSE_BADPASS 0x00000002
+/******************************************************/
+
+/******************************************************/
+/*
 # 13 packet from client: type=0x52ff(unknown) length=83 class=bnet
 0000:   FF 52 53 00 2B 63 B9 05   CA F3 E1 BA 58 5C ED 65    .RS.+c......X\.e
 0010:   BE 8F 0E 89 A9 B8 C7 FE   75 2C 44 10 AE 19 B5 14    ........u,D.....
 0020:   E8 CA E9 C7 37 50 7D 0F   9A 89 00 FF 2F 10 BB EE    ....7P}...../...
 0030:   A8 0C 81 64 AD AF DC C7   3F 58 F1 20 A1 05 E2 38    ...d....?X. ...8
 0040:   18 87 85 5B 74 68 65 61   63 63 6F 75 6E 74 6E 61    ...[theaccountna
-0050:   6D 65 00                                             me.             
+0050:   6D 65 00                                             me.
 */
 #define CLIENT_CREATEACCOUNT_W3 0x52ff
 typedef struct
 {
 	t_bnet_header h;
-	bn_byte       unknown[64];
+	bn_byte       salt[32];
+	bn_byte       password_verifier[32];
 	/* player name */
 } PACKED_ATTR() t_client_createaccount_w3;
 /******************************************************/
@@ -1750,7 +1788,7 @@ typedef struct
 
 
 /******************************************************/
-/* 
+/*
 RECV-> 0000   FF 52 08 00 00 00 00 00                            .R......
 */
 #define SERVER_CREATEACCOUNT_W3 0x52ff
@@ -1778,9 +1816,10 @@ typedef struct
 {
     t_bnet_header h;
     bn_int        message;
+    /* reason for account lock */
 } PACKED_ATTR() t_server_loginreply2;
 #define SERVER_LOGINREPLY2_MESSAGE_SUCCESS  0x00000000
-#define SERVER_LOGINREPLY2_MESSAGE_NONEXIST 0x00000001 /* Account does not exists */
+#define SERVER_LOGINREPLY2_MESSAGE_NONEXIST 0x00000001 /* Account does not exist */
 #define SERVER_LOGINREPLY2_MESSAGE_BADPASS  0x00000002 /* Bad password */
 #define SERVER_LOGINREPLY2_MESSAGE_LOCKED   0x00000006 /* Account is locked */
 /******************************************************/
@@ -1872,7 +1911,7 @@ FF 33 18 00 1A 00 00 00   00 00 00 00 74 6F 73 5F    .3..........tos_
 55 53 41 2E 74 78 74 00                              USA.txt.
 
 Diablo II 1.03
-      FF 33 19 00 04 00   00 80 00 00 00 00 62 6E      .3..........bn 
+      FF 33 19 00 04 00   00 80 00 00 00 00 62 6E      .3..........bn
 73 65 72 76 65 72 2E 69   6E 69 00                   server.ini.
 */
 #define CLIENT_FILEINFOREQ 0x33ff
@@ -2004,11 +2043,11 @@ typedef struct
 EE E4 84 03 20 20 A1 F0   00 20 20 A1 F0 00 68 74    ....  ...  ...ht
 74 70 3A 2F 2F 6E 73 6C   2E 6B 6B 69 72 69 2E 6F    tp://nsl.kkiri.o
 72 67 00 20 20 20 20 20   20 20 20 20 20 20 A2 CB    rg.           ..
-20 50 72 6F 74 6F 73 73   20 69 73 20 54 68 65 20     Protoss is The 
+20 50 72 6F 74 6F 73 73   20 69 73 20 54 68 65 20     Protoss is The
 42 65 73 74 20 A2 CB 20   0D 0A 0D 0A 20 20 20 49    Best .. ....   I
 66 20 59 6F 75 20 57 61   6E 74 20 54 6F 20 4B 6E    f You Want To Kn
 6F 77 20 41 62 6F 75 74   20 55 73 2C 20 47 6F 0D    ow About Us, Go.
-0A 0D 0A 20 20 20 20 20   20 20 20 20 20 20 20 20    ...             
+0A 0D 0A 20 20 20 20 20   20 20 20 20 20 20 20 20    ...
 20 68 74 74 70 3A 2F 2F   6E 73 6C 2E 6B 6B 69 72     http://nsl.kkir
 69 2E 6F 72 67 00 38 38   00 37 30 00 33 00 32 39    i.org.88.70.3.29
 32 36 30 33 31 30 20 33   39 36 31 36 37 38 32 34    260310 396167824
@@ -2027,7 +2066,7 @@ AE 20 6F 72 69 6F 6E 20   2C 2C 20 C3 CA C4 DA C6    . orion ,, .....
 C4 C0 CC B0 A1 20 BE C6   B3 E0 BF EB 2E 2E 0D 0A    ..... ..........
 C4 ED C4 ED 2E 2E 0D 0A   0D 0A C1 B9 B6 F3 20 C0    .............. .
 DF C7 CF B4 C2 20 B3 D1   20 3A 20 6E 73 6C B3 D1    ..... .. : nsl..
-B5 E9 0D 0A C0 DF C7 CF   B4 C2 20 C7 C1 C5 E4 20    .......... .... 
+B5 E9 0D 0A C0 DF C7 CF   B4 C2 20 C7 C1 C5 E4 20    .......... ....
 3A 20 6E 73 6C 40 74 6F   74 6F 72 6F 00 35 31 00    : nsl@totoro.51.
 34 38 00 36 00 32 39 32   35 39 32 36 33 20 39 35    48.6.29259263 95
 36 35 30 35 39 30 32 00   4C 4F 53 53 00 36 00 36    6505902.LOSS.6.6
@@ -2135,8 +2174,8 @@ ff 0a 1f 00 4c 69 66 65   6c 69 6b 65 00 42 65 74    ....Lifelike.Bet
 61 57 65 73 74 2c 4c 69   66 65 6c 69 6b 65 00       aWest,Lifelike.
 
 Diablo II 1.03 - amazon just after creation
-      ff 0a 20 00 47 6f   64 64 65 73 73 00 51 61      .. .Goddess.Qa 
-72 61 74 68 52 65 61 6c   6d 2c 47 6f 64 64 65 73    rathRealm,Goddes 
+      ff 0a 20 00 47 6f   64 64 65 73 73 00 51 61      .. .Goddess.Qa
+72 61 74 68 52 65 61 6c   6d 2c 47 6f 64 64 65 73    rathRealm,Goddes
 73 00                                                s.
 */
 #define CLIENT_PLAYERINFOREQ 0x0aff
@@ -2211,7 +2250,7 @@ typedef struct
  *  unknown3 (always zero?)
  *  unknown4 (always zero?) FIXME: I don't see this last one in any dumps...
                                    is this only a SEXP thing?
-				   
+
  * for STAR, SEXP, SSHR >= 1.10:
  * "%s %u %u %u %u %u %u %u %u %u %s"
  *  client tag (RATS, PXES, RHSS)
@@ -2225,7 +2264,7 @@ typedef struct
  *  unknown7 (always zero?)
  *  icon tag (usually client tag)
 
-				   
+
  *
  * for DRTL:
  * "%s %u %u %u %u %u %u %u %u %u"
@@ -2376,13 +2415,13 @@ MT_ADD:
 0x0300: d1 43 88 aa bd ce 3c 00   42 2d 57 61 74 74 7a 00    .C....<.B-Wattz.
 
 From bnetd-0.4.23pre18 to Diablo II 1.03
-      FF 0F 69 00 09 00  00 00 00 00 00 00 12 00   I@..i... ........ 
-00 00 00 00 00 00 00 00  00 00 00 00 00 00 45 6C   ........ ......El 
-66 6C 6F 72 64 00 56 44  32 44 51 61 72 61 74 68   flord.VD 2DQarath 
-52 65 61 6C 6D 2C 46 61  6B 65 43 68 61 72 2C 83   Realm,Fa keChar,. 
-80 FF FF FF FF FF 2F FF  FF FF FF FF FF FF FF FF   ....../. ........ 
-FF 03 FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ........ ........ 
-FF FF 07 80 80 80 80 FF  FF FF 00                  ........ ...   
+      FF 0F 69 00 09 00  00 00 00 00 00 00 12 00   I@..i... ........
+00 00 00 00 00 00 00 00  00 00 00 00 00 00 45 6C   ........ ......El
+66 6C 6F 72 64 00 56 44  32 44 51 61 72 61 74 68   flord.VD 2DQarath
+52 65 61 6C 6D 2C 46 61  6B 65 43 68 61 72 2C 83   Realm,Fa keChar,.
+80 FF FF FF FF FF 2F FF  FF FF FF FF FF FF FF FF   ....../. ........
+FF 03 FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ........ ........
+FF FF 07 80 80 80 80 FF  FF FF 00                  ........ ...
 */
 #define SERVER_MESSAGE 0x0fff
 typedef struct
@@ -2592,7 +2631,7 @@ FF 09 17 00 03 00 00 00   FF FF 00 00 00 00 00 00    ................
 19 00 00 00 00 00 00                                 .......
 
 FF 09 24 00 00 00 00 00   00 00 00 00 00 00 00 00    ..$.............
-01 00 00 00 4C 61 64 64   65 72 20 31 20 6F 6E 20    ....Ladder 1 on 
+01 00 00 00 4C 61 64 64   65 72 20 31 20 6F 6E 20    ....Ladder 1 on
 31 00 00 00                                          1...
 */
 #define CLIENT_GAMELISTREQ 0x09ff
@@ -2641,7 +2680,7 @@ typedef struct
 #define CLIENT_GAMETYPE_DIABLO_d     0x0000000d /* Level ? Char */
 /* list might continue - what is maximum diablo level ? */
 /* FIXME: Not sure how Diablo II does things yet */
-#define CLIENT_GAMETYPE_DIABLO2_CLOSE 		0x00000000 /* close game */ 
+#define CLIENT_GAMETYPE_DIABLO2_CLOSE 		0x00000000 /* close game */
 #define CLIENT_GAMETYPE_DIABLO2_OPEN_NORMAL	0X00000008 /* open, normal difficulty */
 #define CLIENT_GAMETYPE_DIABLO2_OPEN_NIGHTMARE	0X00000009 /* open, nightmare difficulty */
 #define CLIENT_GAMETYPE_DIABLO2_OPEN_HELL	0X0000000a /* open, hell difficulty */
@@ -2689,7 +2728,7 @@ FF 09 70 00 01 00 00 00   0F 00 04 00 09 04 00 00    ..p.............
 0050:   15 29 4D 61 71 53 73 5D   63 65 75 61 5D A9 29 37    .)MaqSs]ceua].)7
 0060:   29 45 61 73 6B 69 21 47   6F 73 65 73 75 DD 2F 77    )Easki!Gosesu./w
 0070:   33 6D 01 4B 61 D7 69 73   69 69 6F 5B 53 07 4B 5D    3m.Ka.isiio[S.K]
-0080:   01 01 00                                             ...             
+0080:   01 01 00                                             ...
 
 [23:32] <@nok-> 0000:   FF 09 E9 01 04 00 00 00   01 00 00 00 09 04 00 00    ................
 [23:32] <@nok-> 0010:   02 00 17 E0 40 69 1B 07   00 00 00 00 00 00 00 00    ....@i..........
@@ -2739,8 +2778,8 @@ typedef struct
     /* clear password */
     /* info */
 } PACKED_ATTR() t_server_gamelistreply_game;
-#define SERVER_GAMELISTREPLY_GAME_UNKNOWN7       0x00000000 //0x00000409 // 0x0000000c 
-#define SERVER_GAMELISTREPLY_GAME_UNKNOWN1           0x0001 //0x0000 //0x0001 // 0x0000 
+#define SERVER_GAMELISTREPLY_GAME_UNKNOWN7       0x00000000 //0x00000409 // 0x0000000c
+#define SERVER_GAMELISTREPLY_GAME_UNKNOWN1           0x0001 //0x0000 //0x0001 // 0x0000
 #define SERVER_GAMELISTREPLY_GAME_UNKNOWN3           0x0002
 #define SERVER_GAMELISTREPLY_GAME_UNKNOWN4       0x00000000
 #define SERVER_GAMELISTREPLY_GAME_UNKNOWN5       0x00000000
@@ -2750,7 +2789,7 @@ typedef struct
 #define SERVER_GAMELISTREPLY_GAME_STATUS_DONE    0x0000000c
 #define SERVER_GAMELISTREPLY_GAME_UNKNOWN6       0x0000002b /* latency? */
 
-#define SERVER_GAMELISTREPLY_TYPE_DIABLO2_OPEN 		0x0704 /* open game */ 
+#define SERVER_GAMELISTREPLY_TYPE_DIABLO2_OPEN 		0x0704 /* open game */
 /******************************************************/
 
 
@@ -2869,8 +2908,8 @@ FF 1C 4F 00                                          ..O.
 73 74 20 54 65 6D 70 6C   65 0D 00                   st.Temple..
 
 Diablo II 1.03 (level diff 0)
-      FF 1C 20 00 00 00   00 00 00 00 00 00 00 00      .. ... ........ 
-00 00 00 00 00 00 00 00   00 00 54 65 73 74 00 00    ........ ..Test.. 
+      FF 1C 20 00 00 00   00 00 00 00 00 00 00 00      .. ... ........
+00 00 00 00 00 00 00 00   00 00 54 65 73 74 00 00    ........ ..Test..
 31 00                                                1.
 */
 #define CLIENT_STARTGAME4 0x1cff /* Brood War or newer Starcraft (1.04, 1.05) */
@@ -3042,7 +3081,7 @@ FF 32 2A 00 1A 29 25 72   77 C3 3C 25 6B 4D 7A A4    .2*..)%rw.<%kMz.
 65 6E 67 65 72 2E 73 63   6D 00                      enger.scm.
 
 FF 32 2C 00 21 F8 16 2D   99 D9 BC A4 A6 5C BA 60    .2,.!..-.....\.`
-71 DE 6D 64 6F BC A5 03   28 34 29 44 69 72 65 20    q.mdo...(4)Dire 
+71 DE 6D 64 6F BC A5 03   28 34 29 44 69 72 65 20    q.mdo...(4)Dire
 53 74 72 61 69 74 73 2E   73 63 6D 00                Straits.scm.
 */
 #define CLIENT_MAPAUTHREQ1 0x32ff
@@ -3077,13 +3116,13 @@ From BW1.08alpha:
 FF 3C 31 00 7A 20 01 00   3B B7 C6 27 0D 61 C3 79    .<1.z ..;..'.a.y
 79 BE 24 5E 9C 07 05 7D   0B 6A A0 78 28 35 29 4A    y.$^...}.j.x(5)J
 65 77 65 6C 65 64 20 52   69 76 65 72 2E 73 63 6D    eweled River.scm
-00                                                   . 
+00                                                   .
 */
 #define CLIENT_MAPAUTHREQ2 0x3cff
 typedef struct
 {
     t_bnet_header h;
-    bn_int        unknown; 
+    bn_int        unknown;
     bn_int        file_hash[5];
     /* mapfile */
 } PACKED_ATTR() t_client_mapauthreq2;
@@ -3620,7 +3659,7 @@ typedef struct
 /*
 this packet is sent right after cdkey and version auth reply success and crashdump exist
 0x0000: ff 5d 14 00 01 01 00 27   00 0a 01 05 00 00 c0 00    .].....'........
-0x0010: 00 00 00 00                                          ....            
+0x0010: 00 00 00 00                                          ....
 */
 
 #define CLIENT_CRASHDUMP		0x5dff
@@ -3659,56 +3698,56 @@ typedef struct
 
 /* clan handling */
 
-#define SERVER_W3XP_CLAN_MEMBER_CHIEFTAIN 0x04
-#define SERVER_W3XP_CLAN_MEMBER_SHAMAN 0x03
-#define SERVER_W3XP_CLAN_MEMBER_GRUNT 0x02
-#define SERVER_W3XP_CLAN_MEMBER_PEON 0x01
-#define SERVER_W3XP_CLAN_MEMBER_NEW 0x00
-#define SERVER_W3XP_CLAN_MEMBER_OFFLINE 0x00
-#define SERVER_W3XP_CLAN_MEMBER_ONLINE 0x01
-#define SERVER_W3XP_CLAN_MEMBER_CHANNEL 0x02
-#define SERVER_W3XP_CLAN_MEMBER_GAME 0x03
-#define SERVER_W3XP_CLAN_MEMBER_PRIVATE_GAME 0x04
+#define SERVER_CLAN_MEMBER_CHIEFTAIN 0x04
+#define SERVER_CLAN_MEMBER_SHAMAN 0x03
+#define SERVER_CLAN_MEMBER_GRUNT 0x02
+#define SERVER_CLAN_MEMBER_PEON 0x01
+#define SERVER_CLAN_MEMBER_NEW 0x00
+#define SERVER_CLAN_MEMBER_OFFLINE 0x00
+#define SERVER_CLAN_MEMBER_ONLINE 0x01
+#define SERVER_CLAN_MEMBER_CHANNEL 0x02
+#define SERVER_CLAN_MEMBER_GAME 0x03
+#define SERVER_CLAN_MEMBER_PRIVATE_GAME 0x04
 
 /*Paquet #267
-0x0000   FF 75 0A 00 00 00 42 54-54 04                     ÿu....BTT.
+0x0000   FF 75 0A 00 00 00 42 54-54 04                     u....BTT.
 */
 /*
 300: recv class=bnet[0x02] type=unknown[0x70ff] length=12
-0000:   FF 70 0C 00 01 00 00 00   00 64 73 66                .p.......dsf    
+0000:   FF 70 0C 00 01 00 00 00   00 64 73 66                .p.......dsf
 300: send class=bnet[0x02] type=unknown[0x70ff] length=56
 0000:   FF 70 38 00 01 00 00 00   00 09 44 4A 50 32 00 44    .p8.......DJP2.D
 0010:   4A 50 33 00 44 4A 50 34   00 44 4A 50 35 00 44 4A    JP3.DJP4.DJP5.DJ
 0020:   50 36 00 44 4A 50 37 00   44 4A 50 38 00 44 4A 50    P6.DJP7.DJP8.DJP
-0030:   39 00 44 4A 50 31 30 00                              9.DJP10.        
+0030:   39 00 44 4A 50 31 30 00                              9.DJP10.
 300: recv class=bnet[0x02] type=CLIENT_FRIENDINFOREQ[0x66ff] length=5
-0000:   FF 66 05 00 01                                       .f...           
+0000:   FF 66 05 00 01                                       .f...
 300: send class=bnet[0x02] type=unknown[0x66ff] length=12
-0000:   FF 66 0C 00 01 00 00 00   00 00 00 00                .f..........    
+0000:   FF 66 0C 00 01 00 00 00   00 00 00 00                .f..........
 300: recv class=bnet[0x02] type=unknown[0x71ff] length=64
 0000:   FF 71 40 00 01 00 00 00   74 65 73 74 00 00 64 73    .q@.....test..ds
 0010:   66 09 44 4A 50 32 00 44   4A 50 33 00 44 4A 50 34    f.DJP2.DJP3.DJP4
 0020:   00 44 4A 50 35 00 44 4A   50 36 00 44 4A 50 37 00    .DJP5.DJP6.DJP7.
 0030:   44 4A 50 38 00 44 4A 50   39 00 44 4A 50 31 30 00    DJP8.DJP9.DJP10.
 300: send class=bnet[0x02] type=unknown[0x71ff] length=10
-0000:   FF 71 0A 00 01 00 00 00   00 00                      .q........      
+0000:   FF 71 0A 00 01 00 00 00   00 00                      .q........
 300: send class=bnet[0x02] type=unknown[0x75ff] length=12
-0000:   FF 75 0C 00 00 00 00 00   64 73 66 00                .u......dsf. 
+0000:   FF 75 0C 00 00 00 00 00   64 73 66 00                .u......dsf.
 300: recv class=bnet[0x02] type=CLIENT_FRIENDINFOREQ[0x66ff] length=5
-0000:   FF 66 05 00 02                                       .f...           
+0000:   FF 66 05 00 02                                       .f...
 300: send class=bnet[0x02] type=unknown[0x66ff] length=12
-0000:   FF 66 0C 00 02 00 00 00   00 00 00 00                .f.......... 
+0000:   FF 66 0C 00 02 00 00 00   00 00 00 00                .f..........
 */
 
-#define CLIENT_W3XP_CLAN_CREATEREQ 0x70ff
+#define CLIENT_CLAN_CREATEREQ 0x70ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   bn_int               clantag;
-} PACKED_ATTR() t_client_w3xp_clan_createreq;
+} PACKED_ATTR() t_client_clan_createreq;
 
 
-#define SERVER_W3XP_CLAN_CREATEREPLY 0x70ff
+#define SERVER_CLAN_CREATEREPLY 0x70ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
@@ -3716,12 +3755,12 @@ typedef struct{
   bn_byte			   friend_count;
   /* player name in chan or mutual
   char player_name[sizeof (friend_name)]; */
-} PACKED_ATTR() t_server_w3xp_clan_createreply;
-#define SERVER_W3XP_CLAN_CREATEREPLY_CHECK_OK 0x00
-#define SERVER_W3XP_CLAN_CREATEREPLY_CHECK_ALLREADY_IN_USE 0x01
-#define SERVER_W3XP_CLAN_CREATEREPLY_CHECK_TIME_LIMIT 0x02
-#define SERVER_W3XP_CLAN_CREATEREPLY_CHECK_EXCEPTION 0x04
-#define SERVER_W3XP_CLAN_CREATEREPLY_CHECK_INVALID_CLAN_TAG 0x0a
+} PACKED_ATTR() t_server_clan_createreply;
+#define SERVER_CLAN_CREATEREPLY_CHECK_OK 0x00
+#define SERVER_CLAN_CREATEREPLY_CHECK_ALLREADY_IN_USE 0x01
+#define SERVER_CLAN_CREATEREPLY_CHECK_TIME_LIMIT 0x02
+#define SERVER_CLAN_CREATEREPLY_CHECK_EXCEPTION 0x04
+#define SERVER_CLAN_CREATEREPLY_CHECK_INVALID_CLAN_TAG 0x0a
 
 /*
 3852: recv class=bnet[0x02] type=unknown[0x71ff] length=70
@@ -3729,9 +3768,9 @@ typedef struct{
 0010:   6E 65 00 00 5A 57 53 09   44 4A 50 32 00 44 4A 50    ne..ZWS.DJP2.DJP
 0020:   33 00 44 4A 50 34 00 44   4A 50 35 00 44 4A 50 36    3.DJP4.DJP5.DJP6
 0030:   00 44 4A 50 37 00 44 4A   50 38 00 44 4A 50 31 30    .DJP7.DJP8.DJP10
-0040:   00 44 4A 50 39 00                                    .DJP9.    
+0040:   00 44 4A 50 39 00                                    .DJP9.
 */
-#define CLIENT_W3XP_CLAN_CREATEINVITEREQ 0x71ff
+#define CLIENT_CLAN_CREATEINVITEREQ 0x71ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
@@ -3740,24 +3779,24 @@ typedef struct{
      bn_byte			friend_count; //Number of friend selected
      Name of friend (\0 terminated string)
    */
-} PACKED_ATTR() t_client_w3xp_clan_createinvitereq;
+} PACKED_ATTR() t_client_clan_createinvitereq;
 
 /*3756: send class=bnet[0x02] type=unknown[0x71ff] length=14
-0000:   FF 71 0E 00 02 00 00 00   05 44 4A 50 32 00          .q.......DJP2.  
+0000:   FF 71 0E 00 02 00 00 00   05 44 4A 50 32 00          .q.......DJP2.
 <- Unable to receive invitation ( PG search, already in a clan, etc... )*/
-/*3756: 
+/*3756:
 Paquet #266
-0x0000   FF 71 0A 00 05 00 00 00-00 00                     ÿq........
+0x0000   FF 71 0A 00 05 00 00 00-00 00                     q........
 <- Clan invitation = Sucessfully done */
-#define SERVER_W3XP_CLAN_CREATEINVITEREPLY 0x71ff
+#define SERVER_CLAN_CREATEINVITEREPLY 0x71ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   bn_byte			   status; /* 0x05 = Cannot contact(not in channel screen) or already in clan | 0x04 = Decline | 0x00 = OK :)
   Name of failed member(\0 terminated string) */
-} PACKED_ATTR() t_server_w3xp_clan_createinvitereply;
+} PACKED_ATTR() t_server_clan_createinvitereply;
 
-#define SERVER_W3XP_CLAN_CREATEINVITEREQ 0x72ff
+#define SERVER_CLAN_CREATEINVITEREQ 0x72ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
@@ -3766,168 +3805,192 @@ typedef struct{
      Clan Creator (\0 terminated string)
      bn_byte			friend_count; //Number of friend selected
      Name of friend (\0 terminated string) */
-} PACKED_ATTR() t_server_w3xp_clan_createinvitereq;
+} PACKED_ATTR() t_server_clan_createinvitereq;
 
-#define CLIENT_W3XP_CLAN_CREATEINVITEREPLY 0x72ff
+#define CLIENT_CLAN_CREATEINVITEREPLY 0x72ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   bn_int			   clantag;
   /* Clan Creator (\0 terminated string)
-     bn_byte			reply */ /* 0x04--decline 0x05--Cannot contact(not in channel screen) or already in clan 0x06--accept*/ 
-} PACKED_ATTR() t_client_w3xp_clan_createinvitereply;
+     bn_byte			reply */ /* 0x04--decline 0x05--Cannot contact(not in channel screen) or already in clan 0x06--accept*/
+} PACKED_ATTR() t_client_clan_createinvitereply;
 
 /*
 3876: recv class=bnet[0x02] type=unknown[0x73ff] length=8
 0000:   FF 73 08 00 01 00 00 00                              .s......      */
-#define CLIENT_W3XP_CLAN_DISBANDREQ 0x73ff
+#define CLIENT_CLAN_DISBANDREQ 0x73ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
-} PACKED_ATTR() t_client_w3xp_clan_disbandreq;
+} PACKED_ATTR() t_client_clan_disbandreq;
 
-#define SERVER_W3XP_CLAN_DISBANDREPLY 0x73ff
+#define SERVER_CLAN_DISBANDREPLY 0x73ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   bn_byte              result;   /* 0-- Success  1-- Exception raised  2-- Clan exists less than 1 week, cannot remove */
-} PACKED_ATTR() t_server_w3xp_clan_disbandreply;
-#define SERVER_W3XP_CLAN_DISBANDREPLY_RESULT_OK 0x0
-#define SERVER_W3XP_CLAN_DISBANDREPLY_RESULT_EXCEPTION 0x1
-#define SERVER_W3XP_CLAN_DISBANDREPLY_RESULT_NOT_AUTHORIZED 0x07
-#define SERVER_W3XP_CLAN_DISBANDREPLY_RESULT_FAILED 0x2
+} PACKED_ATTR() t_server_clan_disbandreply;
+#define SERVER_CLAN_DISBANDREPLY_RESULT_OK 0x0
+#define SERVER_CLAN_DISBANDREPLY_RESULT_EXCEPTION 0x1
+#define SERVER_CLAN_DISBANDREPLY_RESULT_FAILED 0x2
 
-#define CLIENT_W3XP_CLAN_MEMBERNEWCHIEFREQ 0x74ff
+#define CLIENT_CLAN_MEMBERNEWCHIEFREQ 0x74ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   /*Player_Name deleted(\0 terminated) */
-} PACKED_ATTR() t_client_w3xp_clan_membernewchiefreq;
+} PACKED_ATTR() t_client_clan_membernewchiefreq;
 
-#define SERVER_W3XP_CLAN_MEMBERNEWCHIEFREPLY 0x74ff
+#define SERVER_CLAN_MEMBERNEWCHIEFREPLY 0x74ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   bn_byte              result; /* 0-successful 1-failed */
-} PACKED_ATTR() t_server_w3xp_clan_membernewchiefreply;
-#define SERVER_W3XP_CLAN_MEMBERNEWCHIEFREPLY_SUCCESS 0x00
-#define SERVER_W3XP_CLAN_MEMBERNEWCHIEFREPLY_FAILED 0x01
+} PACKED_ATTR() t_server_clan_membernewchiefreply;
+#define SERVER_CLAN_MEMBERNEWCHIEFREPLY_SUCCESS 0x00
+#define SERVER_CLAN_MEMBERNEWCHIEFREPLY_FAILED 0x01
 
-#define SERVER_W3XP_CLAN_CLANACK 0x75ff
+#define SERVER_CLAN_CLANACK 0x75ff
 typedef struct{
   t_bnet_header		h;
   bn_byte		unknow1; /* 0x00 */
   bn_int		clantag;
   bn_byte		status;  /* member status */
-} PACKED_ATTR() t_server_w3xp_clan_clanack;
+} PACKED_ATTR() t_server_clan_clanack;
 
-#define SERVER_W3XP_CLANQUITNOTIFY 0x76ff
+#define SERVER_CLANQUITNOTIFY 0x76ff
 typedef struct{
   t_bnet_header        h;
-  bn_byte              status; 
-} PACKED_ATTR() t_server_w3xp_clanquitnotify;
-#define SERVER_W3XP_CLANQUITNOTIFY_STATUS_REMOVED_FROM_CLAN 0x01
+  bn_byte              status;
+} PACKED_ATTR() t_server_clanquitnotify;
+#define SERVER_CLANQUITNOTIFY_STATUS_REMOVED_FROM_CLAN 0x01
 
 /*
 3876: recv class=bnet[0x02] type=unknown[0x77ff] length=13
 0000:   FF 77 0D 00 01 00 00 00   44 4A 50 31 00             .w......DJP1.  */
-#define CLIENT_W3XP_CLAN_INVITEREQ 0x77ff
+#define CLIENT_CLAN_INVITEREQ 0x77ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   /*Player_Name invited */
-} PACKED_ATTR() t_client_w3xp_clan_invitereq;
+} PACKED_ATTR() t_client_clan_invitereq;
 
-#define SERVER_W3XP_CLAN_INVITEREPLY 0x77ff
+#define SERVER_CLAN_INVITEREPLY 0x77ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   bn_byte              result;  /* 0x04--decline 0x05--Cannot contact(not in channel screen) or already in clan */
-} PACKED_ATTR() t_server_w3xp_clan_invitereply;
+} PACKED_ATTR() t_server_clan_invitereply;
 
-#define CLIENT_W3XP_CLANMEMBER_REMOVE_REQ 0x78ff
+#define CLIENT_CLANMEMBER_REMOVE_REQ 0x78ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   /*Player_Name deleted(\0 terminated) */
-} PACKED_ATTR() t_client_w3xp_clanmember_remove_req;
+} PACKED_ATTR() t_client_clanmember_remove_req;
 
-#define SERVER_W3XP_CLANMEMBER_REMOVE_REPLY 0x78ff
+#define SERVER_CLANMEMBER_REMOVE_REPLY 0x78ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   bn_byte              result; /* 0-successful 1-failed */
-} PACKED_ATTR() t_server_w3xp_clanmember_remove_reply;
-#define SERVER_W3XP_CLANMEMBER_REMOVE_SUCCESS 0x00
-#define SERVER_W3XP_CLANMEMBER_REMOVE_FAILED 0x01
+} PACKED_ATTR() t_server_clanmember_remove_reply;
+#define SERVER_CLANMEMBER_REMOVE_SUCCESS 0x00
+#define SERVER_CLANMEMBER_REMOVE_FAILED 0x01
 
-#define SERVER_W3XP_CLAN_INVITEREQ 0x79ff
+#define SERVER_CLAN_INVITEREQ 0x79ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   bn_int               clantag;
   /*Clan_Name (\0 terminated)
-  Player_Name invited (\0 terminated) */
-} PACKED_ATTR() t_server_w3xp_clan_invitereq;
+  Player_Name inviter (\0 terminated) */
+} PACKED_ATTR() t_server_clan_invitereq;
 
-#define CLIENT_W3XP_CLAN_INVITEREPLY 0x79ff
+#define CLIENT_CLAN_INVITEREPLY 0x79ff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   bn_int               clantag;
-  /*Player_Name invited (\0 terminated)
-  bn_byte            reply *//* 0x04--decline 0x05--Cannot contact(not in channel screen) or already in clan 0x06--accept 0x07--no privilege to invite 0x08--cannot invite(??any difference from cannot contact?) 0x09--clan full*/
-} PACKED_ATTR() t_client_w3xp_clan_invitereply;
-#define W3XP_CLAN_INVITEREPLY_SUCCESS 0x00
-#define W3XP_CLAN_INVITEREPLY_DECLINE 0x04
-#define W3XP_CLAN_INVITEREPLY_FAILED 0x05
-#define W3XP_CLAN_INVITEREPLY_ACCEPT 0x06
-#define W3XP_CLAN_INVITEREPLY_NOPRIVILEGE 0x07
-#define W3XP_CLAN_INVITEREPLY_CANNOT 0x08
-#define W3XP_CLAN_INVITEREPLY_CLANFULL 0x09
+  /*Player_Name inviter (\0 terminated)
+  bn_byte            reply */
+} PACKED_ATTR() t_client_clan_invitereply;
 
-#define CLIENT_W3XP_CLANMEMBER_RANKUPDATE_REQ 0x7aff
+/*
+    clan codes according to bnetdocs
+
+    0x00: Success
+    0x01: In use
+    0x02: Too soon
+    0x03: Not enough members
+    0x04: Invitation was declined
+    0x05: Decline
+    0x06: Accept
+    0x07: Not authorized
+    0x08: User not found
+    0x09: Clan is full
+    0x0A: Bad tag
+    0x0B: Bad name
+    0x0C: User not found in that clan
+ */
+
+#define CLAN_RESPONSE_SUCCESS 		0x00
+#define CLAN_RESPONSE_FAIL			0x01
+#define CLAN_RESPONSE_TOO_SOON 		0x02
+#define CLAN_RESPONSE_TOO_SMALL 	0x03
+#define CLAN_RESPONSE_DECLINED 		0x04
+#define CLAN_RESPONSE_DECLINE 		0x05
+#define CLAN_RESPONSE_ACCEPT 		0x06
+#define CLAN_RESPONSE_NOT_AUTHORIZED 0x07
+#define CLAN_RESPONSE_NOT_FOUND 	0x08
+#define CLAN_RESPONSE_CLAN_FULL 	0x09
+#define CLAN_RESPONSE_BAD_TAG		0x0a
+#define CLAN_RESPONSE_BAD_NAME		0x0b
+#define CLAN_RESPONSE_NOT_MEMBER	0x0c
+
+#define CLIENT_CLANMEMBER_RANKUPDATE_REQ 0x7aff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   /*Player_Name invited(\0 terminated)
     Player_Status(bn_byte: 1~4) */
-} PACKED_ATTR() t_client_w3xp_clanmember_rankupdate_req;
+} PACKED_ATTR() t_client_clanmember_rankupdate_req;
 
-#define SERVER_W3XP_CLANMEMBER_RANKUPDATE_REPLY 0x7aff
+#define SERVER_CLANMEMBER_RANKUPDATE_REPLY 0x7aff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   bn_byte              result; /* 0-successful 1-failed */
-} PACKED_ATTR() t_server_w3xp_clanmember_rankupdate_reply;
-#define SERVER_W3XP_CLANMEMBER_RANKUPDATE_SUCCESS 0x00
-#define SERVER_W3XP_CLANMEMBER_RANKUPDATE_FAILED 0x01
+} PACKED_ATTR() t_server_clanmember_rankupdate_reply;
+#define SERVER_CLANMEMBER_RANKUPDATE_SUCCESS 0x00
+#define SERVER_CLANMEMBER_RANKUPDATE_FAILED 0x01
 
-#define CLIENT_W3XP_CLAN_MOTDCHG 0x7bff
+#define CLIENT_CLAN_MOTDCHG 0x7bff
 typedef struct{
   t_bnet_header        h;
   bn_int               unknow1;
   /* Motd en string ^^ */
-} PACKED_ATTR() t_client_w3xp_clan_motdchg;
-#define SERVER_W3XP_CLAN_MOTDREPLY_UNKNOW1 0x00000000
+} PACKED_ATTR() t_client_clan_motdchg;
+#define SERVER_CLAN_MOTDREPLY_UNKNOW1 0x00000000
 
-#define SERVER_W3XP_CLAN_MOTDREPLY 0x7cff
+#define SERVER_CLAN_MOTDREPLY 0x7cff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
   bn_int			   unknow1; /* 0x00000000 */
   /* MOTD */
-} PACKED_ATTR() t_server_w3xp_clan_motdreply;
+} PACKED_ATTR() t_server_clan_motdreply;
 
-#define CLIENT_W3XP_CLAN_MOTDREQ 0x7cff
+#define CLIENT_CLAN_MOTDREQ 0x7cff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
-} PACKED_ATTR() t_client_w3xp_clan_motdreq;
+} PACKED_ATTR() t_client_clan_motdreq;
 
 /*
 Paquet #52
-0x0000   FF 7D 10 01 01 00 00 00-13 4D 79 73 74 69 2E 53   ÿ}.......Mysti.S
+0x0000   FF 7D 10 01 01 00 00 00-13 4D 79 73 74 69 2E 53   }.......Mysti.S
 0x0010   77 5A 00 04 01 00 73 61-75 72 6F 6E 2E 73 77 7A   wZ....sauron.swz
 0x0020   00 03 00 00 73 69 6D 6F-6E 2E 53 77 5A 00 03 00   ....simon.SwZ...
 0x0030   00 4E 65 6F 2D 56 61 67-72 61 6E 74 2E 73 77 7A   .Neo-Vagrant.swz
@@ -3945,7 +4008,7 @@ Paquet #52
 0x00F0   53 77 5A 00 02 00 00 54-72 6F 6C 6C 6F 00 02 00   SwZ....Trollo...
 0x0100   00 53 69 6C 76 65 72 62-65 61 72 64 00 00 00 00   .Silverbeard....
 */
-#define SERVER_W3XP_CLANMEMBERLIST_REPLY 0x7dff
+#define SERVER_CLANMEMBERLIST_REPLY 0x7dff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
@@ -3961,33 +4024,35 @@ typedef struct{
    * unknown(always \0)
    * repeat end
    */
-} PACKED_ATTR() t_server_w3xp_clanmemberlist_reply;
+} PACKED_ATTR() t_server_clanmemberlist_reply;
 
 /*
 Paquet #51
-0x0000   FF 7D 08 00 01 00 00 00-                          ÿ}......
+0x0000   FF 7D 08 00 01 00 00 00-                          }......
 */
 
-#define CLIENT_W3XP_CLANMEMBERLIST_REQ 0x7dff
+#define CLIENT_CLANMEMBERLIST_REQ 0x7dff
 typedef struct{
   t_bnet_header        h;
   bn_int               count;
-} PACKED_ATTR() t_client_w3xp_clanmemberlist_req;
+} PACKED_ATTR() t_client_clanmemberlist_req;
 
-#define SERVER_W3XP_CLANMEMBER_REMOVED_NOTIFY 0x7eff
+#define SERVER_CLANMEMBER_REMOVED_NOTIFY 0x7eff
 typedef struct{
   t_bnet_header        h;
   /* Player_Name deleted(\0 terminated) */
-} PACKED_ATTR() t_server_w3xp_clanmember_removed_notify;
+} PACKED_ATTR() t_server_clanmember_removed_notify;
 
-#define SERVER_W3XP_CLANMEMBERUPDATE 0x7fff
+#define SERVER_CLANMEMBERUPDATE 0x7fff
 typedef struct{
   t_bnet_header        h;
   /* Player_Name invited(\0 terminated)
    * Player_Status(bn_byte: 1~4)
    * Player_Online(bn_short: 0x0/0x1)
    */
-} PACKED_ATTR() t_server_w3xp_clanmemberupdate;
+} PACKED_ATTR() t_server_clanmemberupdate;
+
+}
 
 #endif
 

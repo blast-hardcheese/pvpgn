@@ -16,6 +16,12 @@
 #ifndef INCLUDED_TOURNAMENT_TYPES
 #define INCLUDED_TOURNAMENT_TYPES
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 typedef struct
 {
     unsigned int start_preliminary;
@@ -38,7 +44,7 @@ typedef struct
 				 */
     unsigned int thumbs_down;
 } t_tournament_info;
-																		       
+
 typedef struct
 {
     char * name;
@@ -49,6 +55,10 @@ typedef struct
     int in_finals;
 } t_tournament_user;
 
+}
+
+}
+
 #endif
 
 #ifndef JUST_NEED_TYPES
@@ -56,8 +66,14 @@ typedef struct
 #define INCLUDED_TOURNAMENT_PROTOS
 
 #define JUST_NEED_TYPES
-#include "account.h"
+# include "account.h"
 #undef JUST_NEED_TYPES
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 extern int tournament_signup_user(t_account * account);
 extern int tournament_user_signed_up(t_account * account);
@@ -92,6 +108,11 @@ extern unsigned int tournament_get_races(void);
 extern char * tournament_get_format(void);
 extern char * tournament_get_sponsor(void);
 extern unsigned int tournament_get_thumbs_down(void);
+
+}
+
+}
+
 /*****/
 #endif
 #endif

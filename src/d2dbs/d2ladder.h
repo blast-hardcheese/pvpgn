@@ -18,9 +18,10 @@
 #ifndef INCLUDED_D2LADDER_H
 #define INCLUDED_D2LADDER_H
 
-#include <stdio.h>
+#include <cstdio>
+#include <cstddef>
 #include "common/list.h"
-#include "d2cs/d2cs_d2dbs_ladder.h"
+#include "common/d2cs_d2dbs_ladder.h"
 #define JUST_NEED_TYPES
 #include "d2cs/d2charfile.h"
 #undef JUST_NEED_TYPES
@@ -29,12 +30,18 @@
 #define DEFAULT_LADDER_DIR		"var/ladders"
 #define LADDERFILE_CHECKSUM_OFFSET	offsetof(t_d2ladderfile_header,checksum)
 
+namespace pvpgn
+{
+
+namespace d2dbs
+{
+
 typedef struct
 {
 	unsigned int	experience;
 	unsigned short	status;
 	unsigned char	level;
-	unsigned char	class;
+	unsigned char	chclass;
 	char		charname[MAX_CHARNAME_LEN];
 } t_d2ladder_info;
 
@@ -55,7 +62,11 @@ extern int d2dbs_d2ladder_init(void);
 extern int d2dbs_d2ladder_destroy(void);
 extern int d2ladder_rebuild(void);
 extern int d2ladder_update(t_d2ladder_info * pcharladderinfo);
-extern int d2ladder_print(FILE * ladderstrm);
+extern int d2ladder_print(std::FILE * ladderstrm);
 extern int d2ladder_saveladder(void);
+
+}
+
+}
 
 #endif

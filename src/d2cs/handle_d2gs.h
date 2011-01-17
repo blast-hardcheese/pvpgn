@@ -21,20 +21,17 @@
 #include "connection.h"
 #include "common/packet.h"
 
-/* FIXME: why include the time stuff? */
-#ifdef TIME_WITH_SYS_TIME
-# include <time.h>
-# include <sys/time.h>
-#else
-# ifdef HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# else
-#  include <time.h>
-# endif
-#endif
+namespace pvpgn
+{
 
+namespace d2cs
+{
 
 extern int handle_d2gs_packet(t_connection * c, t_packet * packet);
 extern int handle_d2gs_init(t_connection * c);
+
+}
+
+}
 
 #endif

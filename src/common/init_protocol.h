@@ -26,6 +26,9 @@
 # undef JUST_NEED_TYPES
 #endif
 
+namespace pvpgn
+{
+
 /* There is no header for this packet class and there is only
  * one packet type.
  */
@@ -39,9 +42,11 @@
 #define CLIENT_INITCONN 0x1
 typedef struct
 {
-    bn_byte class;
+    bn_byte cclass;
 } PACKED_ATTR() t_client_initconn;
 /******************************************************/
+
+}
 
 #endif
 

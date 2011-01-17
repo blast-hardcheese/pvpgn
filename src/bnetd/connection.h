@@ -21,51 +21,35 @@
 
 #ifdef CONNECTION_INTERNAL_ACCESS
 
+#include <ctime>
+
 #ifdef JUST_NEED_TYPES
-# ifdef TIME_WITH_SYS_TIME
-#  include <sys/time.h>
-#  include <time.h>
-# else
-#   if HAVE_SYS_TIME_H
-#    include <sys/time.h>
-#   else
-#    include <time.h>
-#   endif
-# endif
 # include "game.h"
-# include "common/queue.h"
 # include "channel.h"
 # include "account.h"
 # include "quota.h"
 # include "character.h"
 # include "versioncheck.h"
 # include "anongame.h"
+# include "anongame_wol.h"
 # include "realm.h"
+# include "common/queue.h"
 # include "common/tag.h"
 # include "common/elist.h"
 # include "common/packet.h"
 # include "common/rcm.h"
 #else
 # define JUST_NEED_TYPES
-# ifdef TIME_WITH_SYS_TIME
-#  include <sys/time.h>
-#  include <time.h>
-# else
-#   if HAVE_SYS_TIME_H
-#    include <sys/time.h>
-#   else
-#    include <time.h>
-#   endif
-# endif
 # include "game.h"
-# include "common/queue.h"
 # include "channel.h"
 # include "account.h"
 # include "quota.h"
 # include "character.h"
 # include "versioncheck.h"
 # include "anongame.h"
+# include "anongame_wol.h"
 # include "realm.h"
+# include "common/queue.h"
 # include "common/tag.h"
 # include "common/elist.h"
 # include "common/packet.h"
@@ -75,7 +59,11 @@
 
 #endif
 
+namespace pvpgn
+{
 
+namespace bnetd
+{
 
 typedef enum
 {
@@ -84,8 +72,13 @@ typedef enum
     conn_class_file,
     conn_class_bot,
     conn_class_telnet,
-    conn_class_irc,     /* Internet Relay Chat */
-    conn_class_wol,     /* Westwood Online */
+    conn_class_ircinit,    /* IRC based protocol INIT*/
+    conn_class_irc,        /* Internet Relay Chat */
+    conn_class_wol,        /* Westwood Chat and Game protocol (IRC based) */
+    conn_class_wserv,      /* Westwood servserv (IRC based) */
+    conn_class_wgameres,   /* Westwood Gameresolution */
+    conn_class_wladder,    /* Westwood Ladder server */
+    conn_class_apireg,     /* Westwood API Register */
     conn_class_d2cs_bnetd,
     conn_class_w3route,
     conn_class_none
@@ -112,7 +105,7 @@ typedef enum
   conn_flags_joingamewhisper	= 0x04,
   conn_flags_leavegamewhisper	= 0x08,
   conn_flags_echoback		= 0x10
-  
+
 } t_conn_flags;
 
 #endif
@@ -134,7 +127,7 @@ typedef struct connection
 	int			fdw_idx;
     } socket; /* IP and socket specific data */
     struct {
-	t_conn_class		class;
+	t_conn_class		cclass;
 	t_conn_state		state;
 	unsigned int		sessionkey;
 	unsigned int		sessionnum;
@@ -175,7 +168,7 @@ typedef struct connection
 	    t_account * *	ignore_list;
 	    unsigned int	ignore_count;
 	    t_quota		quota;
-	    time_t		last_message;
+	    std::time_t		last_message;
 	    char const *	lastsender; /* last person to whisper to this connection */
 	    struct {
 		char const *		ircline; /* line cache for IRC connections */
@@ -197,33 +190,38 @@ typedef struct connection
 	} d2;
 	struct {
 	    char const *		w3_playerinfo; /* ADDED BY UNDYING SOULZZ 4/7/02 */
-	    time_t			anongame_search_starttime;
+	    std::time_t			anongame_search_starttime;
    /* [zap-zero] 20020527 - matching w3route connection for game connection /
     matching game connection for w3route connection */
    /* FIXME: this "optimization" is so confusing leading to many possible bugs */
 	    struct connection *	routeconn;
 	    t_anongame *	anongame;
+	    /* those will be filled when recieving 0x53ff and wiped out after 54ff */
+	    char const * client_proof;
+	    char const * server_proof;
 	} w3;
 	struct {
 	    int ingame;				        /* Are we in a game channel? */
-	    
 	    int codepage;
-	    int locale;
-	    int gameType;
-	    
+	    int findme;                     /* Allow others to find me? */
+	    int pageme;                     /* Allow others to page me? */
 	    char const * apgar;			    /* WOL User Password (encrypted) */
-
-	    char const * gameOptions;		/* Game Options */
+	    t_anongame_wol_player * anongame_player;
 	} wol;
 	int			cr_time;
 	/* Pass fail count for bruteforce protection */
 	unsigned int		passfail_count;
 	/* connection flag substituting some other values */
-	t_conn_flags		cflags;
+	unsigned int		cflags;
    } protocol;
 }
 #endif
 t_connection;
+
+}
+
+}
+
 #endif
 
 
@@ -231,6 +229,8 @@ t_connection;
 #ifndef JUST_NEED_TYPES
 #ifndef INCLUDED_CONNECTION_PROTOS
 #define INCLUDED_CONNECTION_PROTOS
+
+#include <ctime>
 
 #define JUST_NEED_TYPES
 #include "common/packet.h"
@@ -243,7 +243,8 @@ t_connection;
 #include "versioncheck.h"
 #include "timer.h"
 #include "anongame.h"
-# include "realm.h"
+#include "anongame_wol.h"
+#include "realm.h"
 #include "message.h"
 #include "common/tag.h"
 #include "common/fdwatch.h"
@@ -252,22 +253,28 @@ t_connection;
 #define DESTROY_FROM_CONNLIST 0
 #define DESTROY_FROM_DEADLIST 1
 
+namespace pvpgn
+{
+
+namespace bnetd
+{
+
 extern t_anongame * conn_create_anongame(t_connection * c);
 extern void conn_destroy_anongame(t_connection * c);
 
 extern t_anongame * conn_get_anongame(t_connection *c);
 
 
-extern void conn_shutdown(t_connection * c, time_t now, t_timer_data foo);
-extern void conn_test_latency(t_connection * c, time_t now, t_timer_data delta);
-extern char const * conn_class_get_str(t_conn_class class) ;
+extern void conn_shutdown(t_connection * c, std::time_t now, t_timer_data foo);
+extern void conn_test_latency(t_connection * c, std::time_t now, t_timer_data delta);
+extern char const * conn_class_get_str(t_conn_class cclass) ;
 extern char const * conn_state_get_str(t_conn_state state) ;
 
 extern t_connection * conn_create(int tsock, int usock, unsigned int real_local_addr, unsigned short real_local_port, unsigned int local_addr, unsigned short local_port, unsigned int addr, unsigned short port) ;
 extern void conn_destroy(t_connection * c, t_elem ** elem, int conn_or_dead_list);
 extern int conn_match(t_connection const * c, char const * user);
 extern t_conn_class conn_get_class(t_connection const * c) ;
-extern void conn_set_class(t_connection * c, t_conn_class class);
+extern void conn_set_class(t_connection * c, t_conn_class cclass);
 extern t_conn_state conn_get_state(t_connection const * c) ;
 extern void conn_set_state(t_connection * c, t_conn_state state);
 extern unsigned int conn_get_sessionkey(t_connection const * c) ;
@@ -327,6 +334,9 @@ extern int conn_del_watch(t_connection * c, t_account * account, t_clienttag cli
 extern t_channel * conn_get_channel(t_connection const * c) ;
 extern int conn_set_channel_var(t_connection * c, t_channel * channel);
 extern int conn_set_channel(t_connection * c, char const * channelname);
+extern int conn_part_channel(t_connection * c);
+extern int conn_kick_channel(t_connection * c, char const * text);
+extern int conn_quit_channel(t_connection * c, char const * text);
 extern t_game * conn_get_game(t_connection const * c) ;
 extern int conn_set_game(t_connection * c, char const * gamename, char const * gamepass, char const * gameinfo, t_game_type type, int version);
 extern unsigned int conn_get_tcpaddr(t_connection * c) ;
@@ -339,6 +349,8 @@ extern void conn_set_out_size(t_connection * c, unsigned int size);
 extern int conn_push_outqueue(t_connection * c, t_packet * packet);
 extern t_packet * conn_peek_outqueue(t_connection * c);
 extern t_packet * conn_pull_outqueue(t_connection * c);
+extern int conn_clear_outqueue(t_connection * c);
+extern void conn_close_read(t_connection * c);
 extern int conn_check_ignoring(t_connection const * c, char const * me) ;
 extern t_account * conn_get_account(t_connection const * c) ;
 extern void conn_login(t_connection * c, t_account * account, const char *loggeduser);
@@ -413,8 +425,8 @@ extern int conn_set_joingamewhisper_ack(t_connection * c, unsigned int value);
 extern int conn_get_joingamewhisper_ack(t_connection * c);
 extern int conn_set_leavegamewhisper_ack(t_connection * c, unsigned int value);
 extern int conn_get_leavegamewhisper_ack(t_connection * c);
-extern int conn_set_anongame_search_starttime(t_connection * c, time_t t);
-extern time_t conn_get_anongame_search_starttime(t_connection * c);
+extern int conn_set_anongame_search_starttime(t_connection * c, std::time_t t);
+extern std::time_t conn_get_anongame_search_starttime(t_connection * c);
 
 extern int conn_get_user_count_by_clienttag(t_clienttag ct);
 
@@ -426,35 +438,36 @@ extern int conn_get_passfail_count(t_connection * c);
 extern int conn_set_passfail_count(t_connection * c, unsigned int failcount);
 extern int conn_increment_passfail_count (t_connection * c);
 
+extern char const * conn_get_client_proof(t_connection * c);
+extern int conn_set_client_proof(t_connection * c, char const * client_proof);
+
+extern char const * conn_get_server_proof(t_connection * c);
+extern int conn_set_server_proof(t_connection * c, char const * server_proof);
+
 extern int conn_set_tmpOP_channel(t_connection * c, char const * tmpOP_channel);
 extern char const * conn_get_tmpOP_channel(t_connection * c);
 extern int conn_set_tmpVOICE_channel(t_connection * c, char const * tmpVOICE_channel);
 extern char const * conn_get_tmpVOICE_channel(t_connection * c);
 extern t_elist *conn_get_timer(t_connection * c);
 extern int conn_add_fdwatch(t_connection *c, fdwatch_handler handle);
+extern int conn_is_irc_variant(t_connection * c);
 
-/**
-*  Westwood Online Extensions
-*/
+/* Westwood Online Extensions */
 extern int conn_get_wol(t_connection * c);
-
-extern void conn_wol_set_ingame(t_connection * c, int wol_ingame);
-extern int conn_wol_get_ingame(t_connection * c);
-
 extern void conn_wol_set_apgar(t_connection * c, char const * apgar);
-extern char const * conn_wol_get_apgar(t_connection * c); 
-
+extern char const * conn_wol_get_apgar(t_connection * c);
 extern void conn_wol_set_codepage(t_connection * c, int codepage);
 extern int conn_wol_get_codepage(t_connection * c);
+extern void conn_wol_set_findme(t_connection * c, bool findme);
+extern bool conn_wol_get_findme(t_connection * c);
+extern void conn_wol_set_pageme(t_connection * c, bool pageme);
+extern bool conn_wol_get_pageme(t_connection * c);
+extern void conn_wol_set_anongame_player(t_connection * c, t_anongame_wol_player * anongame_player);
+extern t_anongame_wol_player * conn_wol_get_anongame_player(t_connection * c);
 
-extern void conn_wol_set_locale(t_connection * c, int locale);
-extern int conn_wol_get_locale(t_connection * c);
+}
 
-extern void conn_wol_set_game_type(t_connection * c, int gameType);
-extern int conn_wol_get_game_type(t_connection * c); 
-
-extern void conn_wol_set_game_options(t_connection * c, char const * gameOptions);
-extern char const * conn_wol_get_game_options(t_connection * c); 
+}
 
 #endif
 #endif

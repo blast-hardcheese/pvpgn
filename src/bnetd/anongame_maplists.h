@@ -26,8 +26,15 @@
 #define INCLUDED_ANONGAME_MAPLISTS_PROTOS
 
 #define JUST_NEED_TYPES
-#include "common/packet.h"
+# include "common/packet.h"
+# include "common/tag.h"
 #undef JUST_NEED_TYPES
+
+namespace pvpgn
+{
+
+namespace bnetd
+{
 
 extern int	anongame_maplists_create(void);
 extern void	anongame_maplists_destroy(void);
@@ -42,6 +49,10 @@ extern char *	maplists_get_map(int queue, t_clienttag clienttag, int mapnumber);
 
 extern int	anongame_add_tournament_map(t_clienttag clienttag, char * mapname);
 extern void	anongame_tournament_maplists_destroy(void);
+
+}
+
+}
 
 #endif
 #endif

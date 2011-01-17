@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2001  Marco Ziech (mmz@gmx.net)
  * Copyright (C) 2005  Bryan Biedenkapp (gatekeep@gmail.com)
- * Copyright (C) 2008  Pelish (pelish@gmail.com)
+ * Copyright (C) 2006,2007  Pelish (pelish@gmail.com)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,7 +33,7 @@
 /* IRC Defines */
 #define WOL_NICKNAME_LEN 9
 
-#define CHANNEL_PREFIX "(ov)@+"
+#define CHANNEL_PREFIX "(ohv)@%+"
 #define CHANNEL_TYPE   "#"
 
 /* Reply Defines */
@@ -327,33 +327,53 @@
 /**
 * Westwood Online Extensions
 */
-#define RPL_GAME_CHANNEL     326
-#define RPL_CHANNEL			 327
-
-#define RPL_GET_CODEPAGE     328	
-#define RPL_SET_CODEPAGE     329
-
 #define RPL_GET_LOCALE	     309
 #define RPL_SET_LOCALE	     310
 
+#define RPL_GAME_CHANNEL     326
+#define RPL_CHANNEL			 327
+#define RPL_GET_CODEPAGE     328	
+#define RPL_SET_CODEPAGE     329
+
+#define RPL_GET_BUDDY        333
+#define RPL_ADD_BUDDY        334
+#define RPL_DEL_BUDDY        335
+
 #define RPL_BATTLECLAN	     358
 
+#define RPL_ANNOUNCE         377  /* only in WOLv2 */
 #define RPL_BAD_LOGIN        378
 #define RPL_VERCHK_NONREQ    379  /* for WOL */
 
+#define RPL_FIND_USER        388
+#define RPL_PAGE             389
+
 #define RPL_FIND_USER_EX     398
+#define RPL_GET_INSIDER      399
 
-#define RPL_UPDATE_RECORD    602
+/* Westwood Online servserv replies are in range 600 - 615 */
+#define RPL_UPDATE_NONEX     602  /* for servserv */
+#define RPL_UPDATE_EXIST     603  /* for servserv */
 
-#define RPL_IRCSERV			 605
-#define RPL_ENDSERVLIST	     607
+#define RPL_WOLSERV          605
+#define RPL_UPDATE_FTP       606  /* for servserv FTP message */
+#define RPL_QUIT             607
 #define RPL_GAMERESSERV	     608
 #define RPL_LADDERSERV	     609
 #define RPL_LOBCOUNT	     610
+#define RPL_WDTSERV          611
+#define RPL_MANGLERSERV      612
+#define RPL_TICKETSERV       613
+
+#define RPL_PINGSERVER	     615
 
 #define ERR_IDNOEXIST        439
 
-#define ERR_GAMECHANCLOSED   478
+//#define ERR_CHANNELISFULL    471 (used for games too)
+//#define ERR_BANNEDFROMCHAN   474 (used for games too)
+//#define ERR_BADCHANNELKEY    475 (used for game password)
+
+#define ERR_GAMEHASCLOSED   478
 
 /** error's */
 /*
